@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/grey"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/dark_green"
+        android:gravity="center"
+        android:padding="30dp">
+
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ico_pata"
+            android:scaleType="fitCenter"
+            app:tint="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Toca dos Peludos"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:includeFontPadding="false" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:padding="24dp"
+        android:orientation="vertical"
+        android:background="@drawable/rounded_background">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bem-vindo!"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp" />
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="E-mail"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Senha"
+            android:inputType="textPassword"
+            android:minHeight="48dp"
+            android:layout_marginBottom="24dp" />
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Logar"
+            android:backgroundTint="@color/dark_green"
+            android:textColor="@color/white"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:id="@+id/tvForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Esqueci minha senha"
+            android:textColor="@color/dark_green"
+            android:layout_gravity="center_horizontal"
+            android:padding="8dp"
+            android:layout_marginBottom="8dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#DDDDDD"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:id="@+id/tvRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ainda não tem conta? Registrar"
+            android:textColor="@color/dark_green"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+
+</LinearLayout>
