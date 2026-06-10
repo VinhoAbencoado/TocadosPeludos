@@ -6,6 +6,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -29,15 +30,25 @@ public class RecoverActivity extends AppCompatActivity {
 
         recoverButton.setOnClickListener(v -> {
             String email = emailInput.getText().toString().trim();
+            emailInput.setError(null);
             if (email.isEmpty()) {
-                Toast.makeText(this, "Digite seu e-mail", Toast.LENGTH_SHORT).show();
+                emailInput.setError("Informe o e-mail");
+                emailInput.requestFocus();
                 return;
             }
-            if (UserStorage.userExists(this, email)) {
-                Toast.makeText(this, "Se existe uma conta com esse e-mail, um link foi enviado.", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(this, "E-mail não encontrado", Toast.LENGTH_SHORT).show();
+            if (!PasswordUtils.isValidEmail(email)) {
+                emailInput.setError("E-mail inválido");
+                emailInput.requestFocus();
+                return;
             }
+            // Recuperação por e-mail exige backend (adiado). Deixamos claro que é uma simulação.
+            new AlertDialog.Builder(this)
+                    .setTitle("Recuperação de senha (simulação)")
+                    .setMessage("Este aplicativo funciona apenas localmente, sem servidor de e-mail. "
+                            + "Em uma versão com backend, enviaríamos as instruções para "
+                            + email + ".\n\nPor enquanto, esta etapa é apenas demonstrativa.")
+                    .setPositiveButton("Entendi", (d, w) -> finish())
+                    .show();
         });
 
         findViewById(R.id.tvBackToLogin).setOnClickListener(v -> finish());

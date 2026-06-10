@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,17 +16,16 @@
 
         <Button
             android:id="@+id/btnBackDocuments"
+            style="@style/OutlineButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Voltar"
-            android:backgroundTint="@color/dark_green"
-            android:textColor="@color/white"
             android:layout_marginBottom="16dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Inserir documentos"
+            android:text="Documentos para adoção"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@color/dark_green"
@@ -36,74 +34,24 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Preencha as informações abaixo para completar sua inscrição de adoção."
+            android:text="Preencha seus dados pessoais e anexe os documentos exigidos para validar oficialmente a adoção. Em cada documento você pode anexar uma foto ou um arquivo PDF."
             android:textSize="14sp"
             android:layout_marginBottom="24dp" />
 
-        <TextView
+        <!-- Os campos do formulário são gerados dinamicamente em DocumentActivity -->
+        <LinearLayout
+            android:id="@+id/formContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Documento de identidade"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp" />
-        <EditText
-            android:id="@+id/etIdDocument"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="CPF ou RG"
-            android:inputType="text"
-            android:layout_marginBottom="16dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Comprovante de residência"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp" />
-        <EditText
-            android:id="@+id/etProofOfResidence"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Endereço completo"
-            android:inputType="textPostalAddress"
-            android:layout_marginBottom="16dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Declaração de responsabilidade"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp" />
-        <EditText
-            android:id="@+id/etDeclaration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Compromisso de cuidados"
-            android:inputType="textMultiLine"
-            android:minLines="3"
-            android:layout_marginBottom="16dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Autorização de responsável"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp" />
-        <EditText
-            android:id="@+id/etAuthorization"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Nome do responsável (se menor de idade)"
-            android:inputType="textPersonName"
-            android:layout_marginBottom="24dp" />
+            android:orientation="vertical" />
 
         <Button
             android:id="@+id/btnSubmitDocuments"
+            style="@style/PrimaryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Enviar documentos"
-            android:backgroundTint="@color/dark_green"
-            android:textColor="@color/white" />
+            android:layout_marginTop="8dp" />
 
     </LinearLayout>
 </ScrollView>

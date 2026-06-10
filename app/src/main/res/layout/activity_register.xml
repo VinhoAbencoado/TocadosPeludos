@@ -1,114 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/grey"
+    android:fillViewport="true"
     tools:context=".RegisterActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/dark_green"
-        android:gravity="center"
-        android:padding="30dp">
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/ivLogo"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ico_pata"
-            android:scaleType="fitCenter"
-            app:tint="@color/white" />
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="Toca dos Peludos"
-            android:textColor="@color/white"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:includeFontPadding="false" />
+            android:orientation="horizontal"
+            android:background="@drawable/bg_header"
+            android:gravity="center"
+            android:paddingTop="40dp"
+            android:paddingBottom="40dp"
+            android:elevation="6dp">
+
+            <ImageView
+                android:id="@+id/ivLogo"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:src="@drawable/ico_pata"
+                android:scaleType="fitCenter"
+                app:tint="@color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="Toca dos Peludos"
+                android:textColor="@color/white"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:includeFontPadding="false" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:padding="24dp"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card"
+            android:elevation="3dp">
+
+            <TextView
+                style="@style/Text.Heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Criar conta"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                style="@style/Text.Body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Preencha os dados para começar"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tipo de conta"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:layout_marginBottom="8dp" />
+
+            <RadioGroup
+                android:id="@+id/rgAccountType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="18dp">
+
+                <RadioButton
+                    android:id="@+id/rbAdopter"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Sou adotante"
+                    android:textColor="@color/text_primary"
+                    android:buttonTint="@color/green_primary"
+                    android:checked="true" />
+
+                <RadioButton
+                    android:id="@+id/rbOng"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Sou ONG"
+                    android:textColor="@color/text_primary"
+                    android:buttonTint="@color/green_primary" />
+
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/etName"
+                style="@style/FieldInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nome"
+                android:inputType="textPersonName"
+                android:layout_marginBottom="14dp" />
+
+            <EditText
+                android:id="@+id/etCnpj"
+                style="@style/FieldInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="CNPJ da ONG"
+                android:inputType="number"
+                android:visibility="gone"
+                android:layout_marginBottom="14dp" />
+
+            <EditText
+                android:id="@+id/etEmail"
+                style="@style/FieldInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="E-mail"
+                android:inputType="textEmailAddress"
+                android:layout_marginBottom="14dp" />
+
+            <EditText
+                android:id="@+id/etPassword"
+                style="@style/FieldInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Senha"
+                android:inputType="textPassword"
+                android:layout_marginBottom="14dp" />
+
+            <EditText
+                android:id="@+id/etConfirmPassword"
+                style="@style/FieldInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Confirmar senha"
+                android:inputType="textPassword"
+                android:layout_marginBottom="24dp" />
+
+            <Button
+                android:id="@+id/btnRegister"
+                style="@style/PrimaryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Registrar"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/tvLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Já tem conta? Entrar"
+                android:textColor="@color/dark_green"
+                android:textStyle="bold"
+                android:padding="8dp"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:padding="24dp"
-        android:orientation="vertical"
-        android:background="@drawable/rounded_background">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Criar conta"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="24dp" />
-
-        <EditText
-            android:id="@+id/etName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Nome"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            android:layout_marginBottom="16dp" />
-
-        <EditText
-            android:id="@+id/etEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="E-mail"
-            android:inputType="textEmailAddress"
-            android:minHeight="48dp"
-            android:layout_marginBottom="16dp" />
-
-        <EditText
-            android:id="@+id/etPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Senha"
-            android:inputType="textPassword"
-            android:minHeight="48dp"
-            android:layout_marginBottom="16dp" />
-
-        <EditText
-            android:id="@+id/etConfirmPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Confirmar senha"
-            android:inputType="textPassword"
-            android:minHeight="48dp"
-            android:layout_marginBottom="24dp" />
-
-        <Button
-            android:id="@+id/btnRegister"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Registrar"
-            android:backgroundTint="@color/dark_green"
-            android:textColor="@color/white"
-            android:layout_marginBottom="16dp" />
-
-        <TextView
-            android:id="@+id/tvLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Já tem conta? Entrar"
-            android:textColor="@color/dark_green"
-            android:textStyle="bold"
-            android:padding="8dp"
-            android:layout_gravity="center_horizontal" />
-
-    </LinearLayout>
-
-</LinearLayout>
+</ScrollView>

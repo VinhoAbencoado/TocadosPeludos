@@ -9,18 +9,52 @@
     android:background="@color/grey"
     tools:context=".HomeActivity">
 
+    <!-- Cabeçalho fixo -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_header"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="22dp"
+        android:paddingBottom="22dp"
+        android:elevation="6dp">
+
+        <ImageView
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:src="@drawable/ico_pata"
+            android:scaleType="fitCenter"
+            app:tint="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="Toca dos Peludos"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:includeFontPadding="false" />
+
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:paddingTop="16dp"
-        android:paddingBottom="16dp">
+        android:paddingBottom="16dp"
+        android:clipToPadding="false">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!-- ===== Aba Início ===== -->
             <LinearLayout
                 android:id="@+id/homeContent"
                 android:layout_width="match_parent"
@@ -32,8 +66,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Olá! Bem-vindo ao seu painel"
-                    android:textColor="@color/dark_green"
-                    android:textSize="24sp"
+                    android:textColor="@color/text_primary"
+                    android:textSize="22sp"
                     android:textStyle="bold"
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
@@ -46,150 +80,113 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="24dp"
-                    android:padding="18dp"
+                    android:padding="20dp"
                     android:orientation="vertical"
-                    android:background="@drawable/rounded_background"
-                    android:elevation="4dp">
+                    android:background="@drawable/bg_card"
+                    android:elevation="2dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Complete seu perfil"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Envie seus documentos para aproveitar todos os recursos e validar sua adoção."
+                        android:textSize="14sp"
+                        android:textColor="@color/text_secondary"
+                        android:layout_marginBottom="16dp" />
+
+                    <Button
+                        android:id="@+id/btnCompleteAccount"
+                        style="@style/PrimaryButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Completar conta" />
+
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Complete seu perfil para aproveitar todos os recursos"
-                    android:textSize="16sp"
-                    android:textColor="@android:color/black"
+                    android:text="Eventos em destaque"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
                     android:layout_marginBottom="12dp" />
 
-                <Button
-                    android:id="@+id/btnCompleteAccount"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/tvNoEventsHome"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Completar conta"
-                    android:backgroundTint="@color/dark_green"
-                    android:textColor="@color/white" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Eventos em destaque"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:layout_marginBottom="12dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp">
+                    android:text="Nenhum evento disponível no momento."
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:visibility="gone" />
 
                 <LinearLayout
+                    android:id="@+id/eventsContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="@drawable/rounded_background"
-                    android:padding="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:elevation="4dp">
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:layout_marginBottom="8dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Feira de Adoção"
-                        android:textStyle="bold"
-                        android:textSize="18sp"
-                        android:layout_marginBottom="8dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Adote um amigo"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:layout_marginBottom="12dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Conheça novos amigos peludos neste sábado."
-                        android:textSize="14sp"
-                        android:layout_marginBottom="12dp" />
+                <EditText
+                    android:id="@+id/etSearchAnimals"
+                    style="@style/FieldInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Buscar por nome, espécie ou ONG"
+                    android:inputType="text"
+                    android:imeOptions="actionSearch"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="12dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="20 mai"
-                        android:textColor="@color/dark_green"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/tvNoAnimalsHome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ainda não há animais cadastrados para adoção."
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:visibility="gone" />
 
                 <LinearLayout
+                    android:id="@+id/animalsContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="@drawable/rounded_background"
-                    android:padding="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:elevation="4dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Workshop de Cuidados"
-                        android:textStyle="bold"
-                        android:textSize="18sp"
-                        android:layout_marginBottom="8dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Dicas práticas para você cuidar melhor do seu pet."
-                        android:textSize="14sp"
-                        android:layout_marginBottom="12dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="28 mai"
-                        android:textColor="@color/dark_green"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/rounded_background"
-                    android:padding="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:elevation="4dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Passeio Pet Friendly"
-                        android:textStyle="bold"
-                        android:textSize="18sp"
-                        android:layout_marginBottom="8dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Encontro ao ar livre para passeios e diversão."
-                        android:textSize="14sp"
-                        android:layout_marginBottom="12dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="05 jun"
-                        android:textColor="@color/dark_green"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp" />
 
             </LinearLayout>
 
-            </LinearLayout>
-
+            <!-- ===== Aba Perfil ===== -->
             <LinearLayout
                 android:id="@+id/profileContent"
                 android:layout_width="match_parent"
@@ -198,85 +195,188 @@
                 android:visibility="gone"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="4dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Perfil"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:textStyle="bold"
-                    android:layout_marginBottom="12dp" />
-
-                <TextView
-                    android:id="@+id/tvDocumentStatus"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Status dos documentos: pendente"
-                    android:textSize="14sp"
-                    android:layout_marginBottom="12dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Documentos necessários para adoção oficial"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
                     android:layout_marginBottom="12dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="@drawable/rounded_background"
-                    android:padding="16dp"
-                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/bg_card"
+                    android:padding="20dp"
+                    android:elevation="2dp"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:id="@+id/tvProfileName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary"
+                        android:layout_marginBottom="6dp" />
+
+                    <TextView
+                        android:id="@+id/tvProfileEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_secondary"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:id="@+id/tvProfilePhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Telefone: -"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_secondary"
+                        android:layout_marginBottom="16dp" />
+
+                    <Button
+                        android:id="@+id/btnEditProfile"
+                        style="@style/PrimaryButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Editar perfil" />
+
+                    <Button
+                        android:id="@+id/btnChangePassword"
+                        style="@style/OutlineButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Alterar senha"
+                        android:layout_marginTop="10dp" />
+
+                    <Button
+                        android:id="@+id/btnMyApplications"
+                        style="@style/OutlineButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Minhas candidaturas"
+                        android:layout_marginTop="10dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvDocumentStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Documentos: pendente"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="16dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card"
+                    android:padding="20dp"
+                    android:layout_marginBottom="16dp"
                     android:elevation="2dp">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="1. CPF ou documento de identificação"
+                        android:text="Documentos necessários para adoção oficial"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary"
+                        android:layout_marginBottom="12dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Dados pessoais: nome completo, data de nascimento, CPF, RG, telefone e endereço."
                         android:textSize="14sp"
+                        android:textColor="@color/text_secondary"
                         android:layout_marginBottom="8dp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="2. Comprovante de residência"
+                        android:text="• Documento de identidade (RG ou CPF)"
                         android:textSize="14sp"
-                        android:layout_marginBottom="8dp" />
+                        android:textColor="@color/text_secondary"
+                        android:layout_marginBottom="6dp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="3. Declaração de responsabilidade pelo animal"
+                        android:text="• Comprovante de residência"
                         android:textSize="14sp"
-                        android:layout_marginBottom="8dp" />
+                        android:textColor="@color/text_secondary"
+                        android:layout_marginBottom="6dp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="4. Autorização do responsável (se menor de idade)"
-                        android:textSize="14sp" />
+                        android:text="• Termo de responsabilidade assinado"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_secondary"
+                        android:layout_marginBottom="6dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="• Autorização do responsável (se menor de idade)"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_secondary" />
 
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Preencha estes campos para que sua adoção seja validada oficialmente." />
+                    android:text="Preencha estes campos para que sua adoção seja validada oficialmente."
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary" />
 
                 <Button
                     android:id="@+id/btnFillDocuments"
+                    style="@style/PrimaryButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Preencher documentos"
-                    android:layout_marginTop="16dp"
-                    android:backgroundTint="@color/dark_green"
-                    android:textColor="@color/white" />
+                    android:layout_marginTop="16dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Minhas inscrições"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginTop="28dp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/tvNoRegistrations"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Você ainda não se inscreveu em nenhum evento. Toque em um evento na página inicial para se inscrever."
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary" />
+
+                <LinearLayout
+                    android:id="@+id/registrationsContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
             </LinearLayout>
 
+            <!-- ===== Aba Sobre ===== -->
             <LinearLayout
                 android:id="@+id/settingsContent"
                 android:layout_width="match_parent"
@@ -285,53 +385,102 @@
                 android:visibility="gone"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="4dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Sobre"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:textStyle="bold"
+                    android:textColor="@color/text_primary"
                     android:layout_marginBottom="12dp" />
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Sobre o aplicativo"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="8dp" />
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card"
+                    android:padding="20dp"
+                    android:elevation="2dp"
+                    android:layout_marginBottom="16dp">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Toca dos Peludos ajuda a conectar adotantes e eventos pet friendly, centralizando serviços de adoção e cuidados." />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Sobre o aplicativo"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary"
+                        android:layout_marginBottom="8dp" />
 
-                <TextView
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Toca dos Peludos ajuda a conectar adotantes e eventos pet friendly, centralizando serviços de adoção e cuidados."
+                        android:textSize="14sp"
+                        android:textColor="@color/text_secondary" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Versão 1.0"
+                        android:textColor="@color/text_secondary"
+                        android:layout_marginTop="12dp"
+                        android:textStyle="italic" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Versão 1.0"
-                    android:layout_marginTop="12dp"
-                    android:textStyle="italic" />
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card"
+                    android:padding="20dp"
+                    android:elevation="2dp"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Contato e suporte"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Precisa de ajuda? Fale com nossa equipe pelo e-mail suporte@tocadospeludos.com.br."
+                        android:textSize="14sp"
+                        android:textColor="@color/text_secondary"
+                        android:layout_marginBottom="16dp" />
+
+                    <Button
+                        android:id="@+id/btnContactSupport"
+                        style="@style/OutlineButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Falar com o suporte" />
+
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/btnLogout"
+                    style="@style/PrimaryButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Sair"
-                    android:layout_marginTop="20dp"
-                    android:backgroundTint="@color/dark_green"
-                    android:textColor="@color/white" />
+                    android:text="Sair" />
 
                 <Button
                     android:id="@+id/btnDeleteAccount"
+                    style="@style/DangerButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Deletar conta"
                     android:layout_marginTop="12dp"
-                    android:backgroundTint="@android:color/holo_red_dark"
-                    android:textColor="@color/white" />
+                    android:layout_marginBottom="8dp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -341,9 +490,10 @@
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:itemIconTint="@android:color/darker_gray"
-        app:itemTextColor="@android:color/darker_gray"
+        android:background="@color/surface"
+        app:elevation="8dp"
+        app:itemIconTint="@color/nav_item_color"
+        app:itemTextColor="@color/nav_item_color"
         app:menu="@menu/bottom_nav_menu" />
 
 </LinearLayout>

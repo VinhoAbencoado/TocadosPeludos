@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_events"
+        android:icon="@android:drawable/ic_menu_my_calendar"
+        android:title="Eventos" />
+    <item
+        android:id="@+id/nav_animals"
+        android:icon="@android:drawable/ic_menu_gallery"
+        android:title="Animais" />
+    <item
+        android:id="@+id/nav_applications"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="Candidaturas" />
+    <item
+        android:id="@+id/nav_account"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:title="Conta" />
+</menu>

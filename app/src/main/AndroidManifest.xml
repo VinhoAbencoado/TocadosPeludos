@@ -32,6 +32,24 @@
         <activity
             android:name=".HomeActivity"
             android:exported="false" />
+        <activity
+            android:name=".EventDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OngHomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CreateEventActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CreateAnimalActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AnimalDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MyApplicationsActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

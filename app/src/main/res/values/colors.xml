@@ -1,7 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Neutros -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="grey">#F2F2F2</color>
+    <!-- Fundo geral do app (cinza levemente esverdeado) -->
+    <color name="grey">#EEF2EC</color>
+    <color name="surface">#FFFFFFFF</color>
+    <color name="outline">#DCE3DA</color>
+    <color name="text_primary">#1A1C19</color>
+    <color name="text_secondary">#586056</color>
+
+    <!-- Marca (verde) -->
     <color name="dark_green">#2E7D32</color>
+    <color name="green_primary">#2E7D32</color>
+    <color name="green_dark">#1B5E20</color>
+    <color name="green_light">#A5D6A7</color>
+    <color name="green_container">#DBEFDC</color>
+    <color name="on_green_container">#15401A</color>
+
+    <!-- Destaque / acento (âmbar) -->
+    <color name="amber">#F49E0B</color>
+    <color name="amber_container">#FCEFD2</color>
+
+    <!-- Status -->
+    <color name="status_pending">#9A6300</color>
+    <color name="status_done">#1B5E20</color>
+    <color name="danger">#C62828</color>
 </resources>

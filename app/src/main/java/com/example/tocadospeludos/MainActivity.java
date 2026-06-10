@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (UserStorage.isLoggedIn(this)) {
-            startActivity(new Intent(this, HomeActivity.class));
+            startActivity(new Intent(this, homeForCurrentUser()));
             finish();
             return;
         }
@@ -48,16 +48,35 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(v -> {
             String email = emailInput.getText().toString().trim();
             String password = passwordInput.getText().toString();
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Preencha e-mail e senha", Toast.LENGTH_SHORT).show();
+
+            emailInput.setError(null);
+            passwordInput.setError(null);
+
+            boolean valid = true;
+            if (email.isEmpty()) {
+                emailInput.setError("Informe o e-mail");
+                valid = false;
+            }
+            if (password.isEmpty()) {
+                passwordInput.setError("Informe a senha");
+                valid = false;
+            }
+            if (!valid) {
+                (email.isEmpty() ? emailInput : passwordInput).requestFocus();
                 return;
             }
+
             if (UserStorage.login(this, email, password)) {
-                startActivity(new Intent(this, HomeActivity.class));
+                startActivity(new Intent(this, homeForCurrentUser()));
                 finish();
             } else {
-                Toast.makeText(this, "E-mail ou senha incorretos", Toast.LENGTH_SHORT).show();
+                passwordInput.setError("E-mail ou senha incorretos");
+                passwordInput.requestFocus();
             }
         });
+    }
+
+    private Class<?> homeForCurrentUser() {
+        return UserStorage.isCurrentUserOng(this) ? OngHomeActivity.class : HomeActivity.class;
     }
 }
