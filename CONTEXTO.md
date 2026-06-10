@@ -35,12 +35,12 @@
 - **Sem backend**: tudo é local; ONG e adotante só interagem no mesmo dispositivo. Não há sincronização nem multiusuário real.
 - ~~**Segurança fraca**: senhas em texto puro~~ → **resolvido (Bloco 1)**: senhas em hash SHA-256 com salt. Ainda sem token de sessão (sessão local via `current_user`).
 - ~~**Recuperação de senha é fictícia**~~ → **sinalizado (Bloco 1)**: continua simulação (sem backend), mas avisa o usuário e valida o e-mail.
-- **Sem edição de eventos** (apenas criar e excluir). *(Animais já são editáveis — Bloco 4.)*
-- ~~**Fotos não são exibidas**~~ → **resolvido (Bloco 4)**: fotos de animais renderizadas nos cards e no detalhe via `ImageUtils`. Anexos de documentos ainda não são abertos (Bloco 2).
+- ~~**Sem edição de eventos**~~ → **resolvido (Bloco 3)**: eventos editáveis; data por date picker, feed ordenado e sem eventos passados; check-in por QR (de imagem) e lista de participantes.
+- ~~**Fotos não são exibidas**~~ → **resolvido**: fotos de animais nos cards/detalhe via `ImageUtils` (Bloco 4); anexos de documentos abríveis via `AttachmentStore`/FileProvider (Bloco 2).
 - ~~**Sem feedback ao adotante** sobre o resultado da candidatura~~ → **resolvido (Bloco 4)**: tela "Minhas candidaturas" mostra o status.
-- **Validações parciais**: e-mail, força de senha, confirmação, CNPJ e telefone já validados com `setError` (Bloco 1). **CPF e máscaras de entrada** (CPF/telefone/data) ainda pendentes (Bloco 2).
-- **Datas de evento são texto livre** ("20 mai"); não há ordenação nem filtro de eventos passados.
-- **Strings fixas no código/layout** (não centralizadas em `strings.xml`); sem i18n.
+- ~~**Validações parciais**~~ → **resolvido**: e-mail/senha/confirmação/CNPJ/telefone (Bloco 1) e **CPF (dígitos verificadores), data e máscaras** de CPF/telefone/data (Bloco 2) validados com `setError`.
+- ~~**Datas de evento são texto livre**~~ → **resolvido (Bloco 3)**: data escolhida por date picker (`Event.dateMillis`), feed ordenado por data e eventos passados ocultados.
+- ~~**Strings fixas**~~ → **resolvido (Bloco 6)**: layouts e literais de código centralizados em `strings.xml`. i18n (outros idiomas) ainda não configurado, mas a base está pronta.
 - **Sem testes** automatizados; sem diálogos de confirmação para ações destrutivas.
 
 ---
@@ -118,20 +118,20 @@
 - [x] Diálogo de confirmação no **logout** e no **deletar conta** (adotante e ONG).
 - [x] Sessão: login mantido via `current_user` no `SharedPreferences`; `logout`/`deleteAccount` encerram corretamente. *(Token de sessão real fica para o backend — adiado.)*
 
-### Bloco 2 — Documentos do adotante 🟡
-- [ ] Exibir/visualizar anexos enviados (abrir foto/PDF) no perfil.
-- [ ] Máscaras de entrada: **CPF**, **telefone**, **data de nascimento** ([DocumentActivity](app/src/main/java/com/example/tocadospeludos/DocumentActivity.java)).
-- [ ] Validar CPF (dígitos verificadores) e data.
-- [ ] Copiar arquivos anexados para armazenamento do app (não depender da URI externa).
-- [ ] Indicador de progresso de preenchimento (ex.: "7 de 9 concluídos").
+### Bloco 2 — Documentos do adotante ✅
+- [x] Exibir/visualizar anexos enviados (abrir foto/PDF) — botão "Ver" em cada anexo abre via [AttachmentStore](app/src/main/java/com/example/tocadospeludos/AttachmentStore.java) + `FileProvider`.
+- [x] Máscaras de entrada: **CPF**, **telefone**, **data de nascimento** — [MaskTextWatcher](app/src/main/java/com/example/tocadospeludos/MaskTextWatcher.java) em [DocumentActivity](app/src/main/java/com/example/tocadospeludos/DocumentActivity.java).
+- [x] Validar **CPF** (dígitos verificadores) e **data** (real, não futura) — [Validators](app/src/main/java/com/example/tocadospeludos/Validators.java); erro no próprio campo (`setError`).
+- [x] Copiar arquivos anexados para o armazenamento interno do app (`AttachmentStore.copyToInternal`, prefixo `app-file://`); não depende mais da URI externa. Fallback para a URI original se a cópia falhar.
+- [x] Indicador de progresso de preenchimento ("X de N concluídos"), atualizado em tempo real.
 
-### Bloco 3 — Eventos (ciclo completo) 🟡
-- [ ] **Editar** evento (ONG) — hoje só criar/excluir.
-- [ ] Data real (date picker) em vez de texto livre; **ordenar** por data e **ocultar eventos passados**.
-- [ ] Confirmação ao excluir evento.
-- [ ] **Check-in por QR**: tela na ONG para **ler/validar** o QR do adotante no evento (scanner ZXing).
-- [ ] Listar participantes inscritos por evento (visão da ONG).
-- [ ] Cancelar inscrição (adotante).
+### Bloco 3 — Eventos (ciclo completo) ✅
+- [x] **Editar** evento (ONG) — [CreateEventActivity](app/src/main/java/com/example/tocadospeludos/CreateEventActivity.java) reaproveitada em modo edição (`EXTRA_EVENT_ID`); `AppData.updateEvent`.
+- [x] Data real (date picker) em vez de texto livre — `Event.dateMillis` + [DateUtils](app/src/main/java/com/example/tocadospeludos/DateUtils.java); feed usa `getUpcomingEvents` que **ordena por data e oculta eventos passados** (seed agora usa datas reais relativas a hoje).
+- [x] Confirmação ao excluir evento (diálogo).
+- [x] **Check-in por QR**: [CheckInActivity](app/src/main/java/com/example/tocadospeludos/CheckInActivity.java) lê o QR de uma **imagem** ([QRCodeReader](app/src/main/java/com/example/tocadospeludos/QRCodeReader.java) com ZXing core) ou valida o código digitado e faz o check-in. *(Sem câmera ao vivo: evita nova dependência `zxing-android-embedded`, proibida pelas restrições.)*
+- [x] Listar participantes inscritos por evento (visão da ONG) com status presente/aguardando e toggle manual de presença.
+- [x] Cancelar inscrição (adotante) — botão na inscrição do perfil, com confirmação; remove o QR.
 
 ### Bloco 4 — Animais e adoção ✅
 - [x] **Exibir foto** do animal nos cards (adotante e ONG) — via [ImageUtils](app/src/main/java/com/example/tocadospeludos/ImageUtils.java) (downsampling para evitar OOM).
@@ -142,18 +142,18 @@
 - [x] Notificar adotante sobre o resultado: o status (e orientação) aparece em "Minhas candidaturas". *(Push real precisa de backend — adiado.)*
 - [x] Busca/filtro de animais por nome, espécie ou ONG (campo de busca no feed). *(Filtro por "porte" exigiria novo campo no modelo — fica para depois.)*
 
-### Bloco 5 — Gestão da ONG 🟡
-- [ ] Confirmação ao excluir animal/evento e ao recusar candidatura.
-- [ ] Dashboard com contadores (eventos ativos, animais disponíveis, candidaturas pendentes).
-- [ ] Histórico de adoções concluídas.
-- [ ] Perfil público da ONG (visível ao adotante a partir do animal/evento).
+### Bloco 5 — Gestão da ONG ✅
+- [x] Confirmação ao excluir animal/evento e ao recusar candidatura (feito nos Blocos 3/4).
+- [x] **Dashboard** com contadores no topo da aba Eventos: eventos ativos, animais disponíveis, candidaturas pendentes (`AppData.count*`).
+- [x] **Histórico de adoções concluídas** — [AdoptionHistoryActivity](app/src/main/java/com/example/tocadospeludos/AdoptionHistoryActivity.java) (candidaturas aprovadas), acessível na aba Conta.
+- [x] **Perfil público da ONG** — [OngProfileActivity](app/src/main/java/com/example/tocadospeludos/OngProfileActivity.java) com contato e animais disponíveis, acessível ao adotante pelo detalhe do animal ("ver perfil").
 
-### Bloco 6 — Qualidade, validação e acessibilidade 🟡
-- [ ] Centralizar **todas as strings** em [strings.xml](app/src/main/res/values/strings.xml).
-- [ ] `contentDescription` em ícones/imagens; alvos de toque ≥ 48dp.
-- [ ] Erros por campo (`setError`) em vez de só Toast genérico.
-- [ ] Estados vazios/erro/carregamento padronizados.
-- [ ] Tratar rotação/`savedInstanceState` em formulários.
+### Bloco 6 — Qualidade, validação e acessibilidade ✅
+- [x] Centralizar **todas as strings** em [strings.xml](app/src/main/res/values/strings.xml): ~160 textos/hints dos layouts **e** os literais montados em código Java (Toasts, diálogos, cards) via `getString`/format args (`%1$s`, `%1$d`).
+- [x] `contentDescription` em ícones/imagens (logos do cabeçalho marcados como decorativos `@null`; foto do animal descrita). Alvos de toque ≥ 48dp garantidos nos botões dinâmicos (`setMinHeight(dp(44~52))`) e estilos.
+- [x] Erros por campo (`setError`) em vez de só Toast genérico (cadastro, login, recuperação, documentos).
+- [x] Estados vazios padronizados (todas as listas têm TextView de estado vazio controlado por visibilidade).
+- [x] Tratar rotação/`savedInstanceState` em formulários: campos com id são salvos automaticamente; estado extra preservado manualmente em `CreateAnimalActivity` (foto), `CreateEventActivity` (data escolhida) e `DocumentActivity` (campos dinâmicos sem id).
 
 ### Bloco 7 — Design e polimento 🟢
 - [ ] Ícone do app e splash com a marca (pata + verde).

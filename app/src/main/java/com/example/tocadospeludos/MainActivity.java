@@ -54,11 +54,11 @@ public class MainActivity extends AppCompatActivity {
 
             boolean valid = true;
             if (email.isEmpty()) {
-                emailInput.setError("Informe o e-mail");
+                emailInput.setError(getString(R.string.err_email_required));
                 valid = false;
             }
             if (password.isEmpty()) {
-                passwordInput.setError("Informe a senha");
+                passwordInput.setError(getString(R.string.err_password_required));
                 valid = false;
             }
             if (!valid) {
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, homeForCurrentUser()));
                 finish();
             } else {
-                passwordInput.setError("E-mail ou senha incorretos");
+                passwordInput.setError(getString(R.string.err_login_invalid));
                 passwordInput.requestFocus();
             }
         });

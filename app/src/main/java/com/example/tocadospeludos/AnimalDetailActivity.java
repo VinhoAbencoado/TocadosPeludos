@@ -1,5 +1,6 @@
 package com.example.tocadospeludos;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
@@ -46,7 +47,7 @@ public class AnimalDetailActivity extends AppCompatActivity {
         String animalId = getIntent().getStringExtra(EXTRA_ANIMAL_ID);
         animal = AppData.getAnimalById(this, animalId);
         if (animal == null) {
-            Toast.makeText(this, "Animal indisponível", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.toast_animal_unavailable), Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -67,10 +68,18 @@ public class AnimalDetailActivity extends AppCompatActivity {
 
         name.setText(animal.getName());
         species.setText(animal.getSpecies());
-        if (animal.getOwnerOrg().isEmpty()) {
+        if (animal.getOwnerOrg().isEmpty() && animal.getOwnerEmail().isEmpty()) {
             org.setVisibility(View.GONE);
         } else {
-            org.setText("Por " + animal.getOwnerOrg());
+            String orgName = animal.getOwnerOrg().isEmpty() ? "ONG" : animal.getOwnerOrg();
+            org.setText(getString(R.string.card_by_org, orgName));
+            org.setTextColor(ContextCompat.getColor(this, R.color.dark_green));
+            org.setOnClickListener(v -> {
+                Intent intent = new Intent(this, OngProfileActivity.class);
+                intent.putExtra(OngProfileActivity.EXTRA_ONG_EMAIL, animal.getOwnerEmail());
+                intent.putExtra(OngProfileActivity.EXTRA_ONG_NAME, animal.getOwnerOrg());
+                startActivity(intent);
+            });
         }
         description.setText(animal.getDescription());
 
@@ -92,13 +101,13 @@ public class AnimalDetailActivity extends AppCompatActivity {
         boolean alreadyApplied = AppData.hasApplied(this, animal.getId(), email);
 
         if (!available) {
-            apply.setText("Animal já adotado");
+            apply.setText(getString(R.string.card_animal_already_adopted));
             apply.setEnabled(false);
         } else if (alreadyApplied) {
-            apply.setText("Candidatura enviada");
+            apply.setText(getString(R.string.card_application_sent));
             apply.setEnabled(false);
         } else {
-            apply.setText("Candidatar-se à adoção");
+            apply.setText(getString(R.string.card_apply));
             apply.setEnabled(true);
             apply.setOnClickListener(v -> applyForAdoption(apply));
         }
@@ -111,11 +120,10 @@ public class AnimalDetailActivity extends AppCompatActivity {
         // Estimula o adotante a preencher os documentos antes (a ONG os avaliará).
         if (!UserStorage.hasUserDocuments(this, email)) {
             new androidx.appcompat.app.AlertDialog.Builder(this)
-                    .setTitle("Documentos incompletos")
-                    .setMessage("Seus documentos de adoção ainda não estão completos. "
-                            + "Você pode se candidatar mesmo assim, mas a ONG poderá pedir os documentos antes de aprovar.")
-                    .setPositiveButton("Candidatar mesmo assim", (d, w) -> doApply(email, adopterName, apply))
-                    .setNegativeButton("Cancelar", null)
+                    .setTitle(getString(R.string.dlg_docs_incomplete))
+                    .setMessage(getString(R.string.msg_docs_incomplete))
+                    .setPositiveButton(getString(R.string.btn_apply_anyway), (d, w) -> doApply(email, adopterName, apply))
+                    .setNegativeButton(getString(R.string.dialog_cancel), null)
                     .show();
             return;
         }
@@ -124,11 +132,11 @@ public class AnimalDetailActivity extends AppCompatActivity {
 
     private void doApply(String email, String adopterName, Button apply) {
         if (AppData.addApplication(this, animal, email, adopterName)) {
-            Toast.makeText(this, "Candidatura enviada para " + animal.getOwnerOrg(), Toast.LENGTH_SHORT).show();
-            apply.setText("Candidatura enviada");
+            Toast.makeText(this, getString(R.string.toast_application_sent_to, animal.getOwnerOrg()), Toast.LENGTH_SHORT).show();
+            apply.setText(getString(R.string.card_application_sent));
             apply.setEnabled(false);
         } else {
-            Toast.makeText(this, "Você já se candidatou a este animal", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.toast_already_applied), Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -19,7 +19,7 @@
             style="@style/OutlineButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Voltar"
+            android:text="@string/action_back"
             android:layout_marginBottom="16dp" />
 
         <LinearLayout
@@ -36,7 +36,7 @@
                 android:layout_height="240dp"
                 android:scaleType="centerCrop"
                 android:background="@color/grey"
-                android:contentDescription="Foto do animal"
+                android:contentDescription="@string/cd_animal_photo"
                 android:layout_marginBottom="16dp" />
 
             <TextView
@@ -70,7 +70,7 @@
                 android:id="@+id/tvAnimalStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Disponível"
+                android:text="@string/animal_status_available"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:textColor="@color/status_done"
@@ -84,7 +84,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Sobre"
+                android:text="@string/animal_about"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/text_primary"
@@ -105,7 +105,7 @@
                 style="@style/PrimaryButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Candidatar-se à adoção"
+                android:text="@string/animal_apply"
                 android:layout_marginTop="24dp" />
 
         </LinearLayout>

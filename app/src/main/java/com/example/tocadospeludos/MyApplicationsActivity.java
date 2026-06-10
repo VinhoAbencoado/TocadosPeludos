@@ -83,7 +83,7 @@ public class MyApplicationsActivity extends AppCompatActivity {
         card.addView(title);
 
         TextView org = new TextView(this);
-        org.setText("ONG: " + app.optString("ownerOrg", "-"));
+        org.setText(getString(R.string.card_ong_label, app.optString("ownerOrg", "-")));
         org.setTextSize(13);
         org.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
         LinearLayout.LayoutParams op = new LinearLayout.LayoutParams(

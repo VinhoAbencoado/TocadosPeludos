@@ -18,13 +18,20 @@ public class Event implements Serializable {
     private final String location;
     private final String ownerEmail;
     private final String ownerOrg;
+    /** Data em epoch millis (00:00 do dia) para ordenar e ocultar eventos passados. 0 = legado/sem data. */
+    private final long dateMillis;
 
     public Event(String id, String title, String description, String date, String location) {
-        this(id, title, description, date, location, "", "");
+        this(id, title, description, date, location, "", "", 0L);
     }
 
     public Event(String id, String title, String description, String date, String location,
                  String ownerEmail, String ownerOrg) {
+        this(id, title, description, date, location, ownerEmail, ownerOrg, 0L);
+    }
+
+    public Event(String id, String title, String description, String date, String location,
+                 String ownerEmail, String ownerOrg, long dateMillis) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -32,6 +39,7 @@ public class Event implements Serializable {
         this.location = location;
         this.ownerEmail = ownerEmail != null ? ownerEmail : "";
         this.ownerOrg = ownerOrg != null ? ownerOrg : "";
+        this.dateMillis = dateMillis;
     }
 
     public String getId() {
@@ -62,6 +70,10 @@ public class Event implements Serializable {
         return ownerOrg;
     }
 
+    public long getDateMillis() {
+        return dateMillis;
+    }
+
     public JSONObject toJson() throws JSONException {
         JSONObject json = new JSONObject();
         json.put("id", id);
@@ -71,6 +83,7 @@ public class Event implements Serializable {
         json.put("location", location);
         json.put("ownerEmail", ownerEmail);
         json.put("ownerOrg", ownerOrg);
+        json.put("dateMillis", dateMillis);
         return json;
     }
 
@@ -85,6 +98,7 @@ public class Event implements Serializable {
                 json.optString("date", ""),
                 json.optString("location", ""),
                 json.optString("ownerEmail", ""),
-                json.optString("ownerOrg", ""));
+                json.optString("ownerOrg", ""),
+                json.optLong("dateMillis", 0L));
     }
 }

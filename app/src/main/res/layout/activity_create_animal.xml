@@ -19,13 +19,13 @@
             style="@style/OutlineButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Voltar"
+            android:text="@string/action_back"
             android:layout_marginBottom="16dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cadastrar animal"
+            android:text="@string/create_animal_title"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@color/dark_green"
@@ -34,7 +34,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nome *"
+            android:text="@string/label_name_required"
             android:textStyle="bold"
             android:textColor="@color/text_primary"
             android:layout_marginBottom="8dp" />
@@ -43,14 +43,14 @@
             style="@style/FieldInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ex.: Bidu"
+            android:hint="@string/hint_animal_name"
             android:inputType="textCapWords"
             android:layout_marginBottom="16dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Espécie / tipo *"
+            android:text="@string/label_species_required"
             android:textStyle="bold"
             android:textColor="@color/text_primary"
             android:layout_marginBottom="8dp" />
@@ -59,14 +59,14 @@
             style="@style/FieldInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ex.: Cachorro, Gato..."
+            android:hint="@string/hint_animal_species"
             android:inputType="textCapWords"
             android:layout_marginBottom="16dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Descrição *"
+            android:text="@string/label_description_required"
             android:textStyle="bold"
             android:textColor="@color/text_primary"
             android:layout_marginBottom="8dp" />
@@ -75,7 +75,7 @@
             style="@style/FieldInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Porte, idade, temperamento, cuidados..."
+            android:hint="@string/hint_animal_description"
             android:inputType="textMultiLine|textCapSentences"
             android:minLines="3"
             android:gravity="top|start"
@@ -84,7 +84,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Foto (opcional)"
+            android:text="@string/label_photo_optional"
             android:textStyle="bold"
             android:textColor="@color/text_primary"
             android:layout_marginBottom="8dp" />
@@ -93,12 +93,12 @@
             style="@style/OutlineButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Anexar foto" />
+            android:text="@string/attach_photo" />
         <TextView
             android:id="@+id/tvPhotoName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nenhuma foto anexada"
+            android:text="@string/no_photo_attached"
             android:textSize="12sp"
             android:textStyle="italic"
             android:textColor="@color/text_secondary"
@@ -110,7 +110,7 @@
             style="@style/PrimaryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Salvar animal" />
+            android:text="@string/save_animal" />
 
     </LinearLayout>
 </ScrollView>

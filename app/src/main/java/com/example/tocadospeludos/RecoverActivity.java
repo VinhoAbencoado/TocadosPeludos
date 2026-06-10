@@ -32,22 +32,20 @@ public class RecoverActivity extends AppCompatActivity {
             String email = emailInput.getText().toString().trim();
             emailInput.setError(null);
             if (email.isEmpty()) {
-                emailInput.setError("Informe o e-mail");
+                emailInput.setError(getString(R.string.err_email_required));
                 emailInput.requestFocus();
                 return;
             }
             if (!PasswordUtils.isValidEmail(email)) {
-                emailInput.setError("E-mail inválido");
+                emailInput.setError(getString(R.string.err_email_invalid));
                 emailInput.requestFocus();
                 return;
             }
             // Recuperação por e-mail exige backend (adiado). Deixamos claro que é uma simulação.
             new AlertDialog.Builder(this)
-                    .setTitle("Recuperação de senha (simulação)")
-                    .setMessage("Este aplicativo funciona apenas localmente, sem servidor de e-mail. "
-                            + "Em uma versão com backend, enviaríamos as instruções para "
-                            + email + ".\n\nPor enquanto, esta etapa é apenas demonstrativa.")
-                    .setPositiveButton("Entendi", (d, w) -> finish())
+                    .setTitle(getString(R.string.dlg_recover_sim))
+                    .setMessage(getString(R.string.msg_recover_sim, email))
+                    .setPositiveButton(getString(R.string.dialog_understood), (d, w) -> finish())
                     .show();
         });
 

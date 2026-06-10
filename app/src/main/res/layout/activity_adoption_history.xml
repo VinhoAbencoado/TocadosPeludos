@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/myApplicationsRoot"
+    android:id="@+id/adoptionHistoryRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/grey"
-    tools:context=".MyApplicationsActivity">
+    tools:context=".AdoptionHistoryActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:text="@string/my_applications_title"
+            android:text="@string/adoption_history_title"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -54,7 +54,7 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/btnBackApplications"
+                android:id="@+id/btnBackHistory"
                 style="@style/OutlineButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -62,16 +62,16 @@
                 android:layout_marginBottom="16dp" />
 
             <TextView
-                android:id="@+id/tvNoApplicationsAdopter"
+                android:id="@+id/tvNoHistory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/my_applications_empty"
+                android:text="@string/adoption_history_empty"
                 android:textSize="14sp"
                 android:textColor="@color/text_secondary"
                 android:visibility="gone" />
 
             <LinearLayout
-                android:id="@+id/applicationsAdopterContainer"
+                android:id="@+id/historyContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />

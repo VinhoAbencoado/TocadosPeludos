@@ -45,7 +45,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
         event = (Event) getIntent().getSerializableExtra(EXTRA_EVENT);
         if (event == null) {
-            Toast.makeText(this, "Evento indisponível", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.toast_event_unavailable), Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -71,7 +71,7 @@ public class EventDetailActivity extends AppCompatActivity {
             JSONObject reg = findRegistration(email);
             if (reg != null) {
                 showTicket(reg.optString("code", ""), reg.optString("qrContent", ""));
-                registerButton.setText("Você já está inscrito");
+                registerButton.setText(getString(R.string.card_already_registered));
                 registerButton.setEnabled(false);
             }
         }
@@ -84,7 +84,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
         JSONObject reg = UserStorage.registerForEvent(this, email, event, code, qrContent);
         if (reg == null) {
-            Toast.makeText(this, "Não foi possível concluir a inscrição", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.toast_registration_failed), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -94,10 +94,10 @@ public class EventDetailActivity extends AppCompatActivity {
         showTicket(savedCode, savedQr);
 
         Button registerButton = findViewById(R.id.btnRegisterEvent);
-        registerButton.setText("Você já está inscrito");
+        registerButton.setText(getString(R.string.card_already_registered));
         registerButton.setEnabled(false);
 
-        Toast.makeText(this, "Inscrição confirmada! QR Code salvo no seu perfil.", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getString(R.string.toast_registration_confirmed), Toast.LENGTH_LONG).show();
     }
 
     private String buildQrContent(String email, String code) {

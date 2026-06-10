@@ -50,6 +50,25 @@
         <activity
             android:name=".MyApplicationsActivity"
             android:exported="false" />
+        <activity
+            android:name=".CheckInActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdoptionHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OngProfileActivity"
+            android:exported="false" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.tocadospeludos.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

@@ -108,6 +108,23 @@ public class UserStorage {
         }
     }
 
+    /** Nome de qualquer usuário pelo e-mail (ex.: nome público da ONG). */
+    public static String getName(Context context, String email) {
+        if (email == null) {
+            return null;
+        }
+        email = email.trim().toLowerCase();
+        JSONObject users = loadUsers(context);
+        if (!users.has(email)) {
+            return null;
+        }
+        try {
+            return users.getJSONObject(email).optString("name", null);
+        } catch (JSONException e) {
+            return null;
+        }
+    }
+
     public static String getPhone(Context context, String email) {
         if (email == null) {
             return null;
@@ -384,6 +401,9 @@ public class UserStorage {
             reg.put("location", event.getLocation());
             reg.put("code", code);
             reg.put("qrContent", qrContent);
+            reg.put("adopterEmail", email);
+            reg.put("adopterName", user.optString("name", email));
+            reg.put("checkedIn", false);
             registrations.put(reg);
 
             user.put("registrations", registrations);
@@ -393,6 +413,139 @@ public class UserStorage {
         } catch (JSONException e) {
             return null;
         }
+    }
+
+    /** Remove a inscrição do usuário em um evento (cancelamento pelo adotante). */
+    public static boolean cancelEventRegistration(Context context, String email, String eventId) {
+        if (email == null || eventId == null) {
+            return false;
+        }
+        email = email.trim().toLowerCase();
+        JSONObject users = loadUsers(context);
+        if (!users.has(email)) {
+            return false;
+        }
+        try {
+            JSONObject user = users.getJSONObject(email);
+            JSONArray registrations = user.optJSONArray("registrations");
+            if (registrations == null) {
+                return false;
+            }
+            JSONArray updated = new JSONArray();
+            boolean removed = false;
+            for (int i = 0; i < registrations.length(); i++) {
+                JSONObject reg = registrations.optJSONObject(i);
+                if (reg != null && eventId.equals(reg.optString("eventId", ""))) {
+                    removed = true;
+                    continue;
+                }
+                updated.put(reg);
+            }
+            if (removed) {
+                user.put("registrations", updated);
+                users.put(email, user);
+                saveUsers(context, users);
+            }
+            return removed;
+        } catch (JSONException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Retorna os participantes inscritos em um evento, varrendo todos os usuários.
+     * Cada item traz adopterEmail, adopterName, code e checkedIn.
+     */
+    public static JSONArray getEventParticipants(Context context, String eventId) {
+        JSONArray result = new JSONArray();
+        if (eventId == null) {
+            return result;
+        }
+        JSONObject users = loadUsers(context);
+        java.util.Iterator<String> keys = users.keys();
+        while (keys.hasNext()) {
+            String key = keys.next();
+            JSONObject user = users.optJSONObject(key);
+            if (user == null) {
+                continue;
+            }
+            JSONArray registrations = user.optJSONArray("registrations");
+            if (registrations == null) {
+                continue;
+            }
+            for (int i = 0; i < registrations.length(); i++) {
+                JSONObject reg = registrations.optJSONObject(i);
+                if (reg != null && eventId.equals(reg.optString("eventId", ""))) {
+                    try {
+                        JSONObject participant = new JSONObject();
+                        participant.put("adopterEmail", reg.optString("adopterEmail", key));
+                        participant.put("adopterName", reg.optString("adopterName", key));
+                        participant.put("code", reg.optString("code", ""));
+                        participant.put("checkedIn", reg.optBoolean("checkedIn", false));
+                        result.put(participant);
+                    } catch (JSONException e) {
+                        // ignora item inválido
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    /** Marca/atualiza o check-in de um participante em um evento. */
+    public static boolean setEventCheckIn(Context context, String adopterEmail, String eventId, boolean checkedIn) {
+        if (adopterEmail == null || eventId == null) {
+            return false;
+        }
+        adopterEmail = adopterEmail.trim().toLowerCase();
+        JSONObject users = loadUsers(context);
+        if (!users.has(adopterEmail)) {
+            return false;
+        }
+        try {
+            JSONObject user = users.getJSONObject(adopterEmail);
+            JSONArray registrations = user.optJSONArray("registrations");
+            if (registrations == null) {
+                return false;
+            }
+            for (int i = 0; i < registrations.length(); i++) {
+                JSONObject reg = registrations.optJSONObject(i);
+                if (reg != null && eventId.equals(reg.optString("eventId", ""))) {
+                    reg.put("checkedIn", checkedIn);
+                    user.put("registrations", registrations);
+                    users.put(adopterEmail, user);
+                    saveUsers(context, users);
+                    return true;
+                }
+            }
+            return false;
+        } catch (JSONException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Valida um código de ingresso para um evento e, se válido, faz o check-in.
+     * Retorna o objeto do participante (com adopterName) ou null se o código não bater.
+     */
+    public static JSONObject checkInByCode(Context context, String eventId, String code) {
+        if (eventId == null || code == null || code.trim().isEmpty()) {
+            return null;
+        }
+        String target = code.trim();
+        JSONArray participants = getEventParticipants(context, eventId);
+        for (int i = 0; i < participants.length(); i++) {
+            JSONObject p = participants.optJSONObject(i);
+            if (p != null && target.equalsIgnoreCase(p.optString("code", ""))) {
+                setEventCheckIn(context, p.optString("adopterEmail", ""), eventId, true);
+                try {
+                    p.put("checkedIn", true);
+                } catch (JSONException ignored) {
+                }
+                return p;
+            }
+        }
+        return null;
     }
 
     public static boolean deleteAccount(Context context, String email) {

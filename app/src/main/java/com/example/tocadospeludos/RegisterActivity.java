@@ -39,7 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
         accountType.setOnCheckedChangeListener((group, checkedId) -> {
             boolean isOng = checkedId == R.id.rbOng;
             cnpjInput.setVisibility(isOng ? View.VISIBLE : View.GONE);
-            nameInput.setHint(isOng ? "Nome da ONG" : "Nome");
+            nameInput.setHint(isOng ? getString(R.string.hint_ong_name) : getString(R.string.hint_name));
         });
 
         findViewById(R.id.tvLogin).setOnClickListener(v -> finish());
@@ -63,49 +63,49 @@ public class RegisterActivity extends AppCompatActivity {
             View firstError = null;
 
             if (name.isEmpty()) {
-                nameInput.setError(isOng ? "Informe o nome da ONG" : "Informe o nome");
+                nameInput.setError(isOng ? getString(R.string.err_ong_name_required) : getString(R.string.err_name_required));
                 firstError = nameInput;
                 valid = false;
             }
 
             if (isOng) {
                 if (cnpj.isEmpty()) {
-                    cnpjInput.setError("Informe o CNPJ da ONG");
+                    cnpjInput.setError(getString(R.string.err_cnpj_required));
                     if (firstError == null) firstError = cnpjInput;
                     valid = false;
                 } else if (!PasswordUtils.isValidCnpj(cnpj)) {
-                    cnpjInput.setError("CNPJ inválido (14 dígitos)");
+                    cnpjInput.setError(getString(R.string.err_cnpj_invalid));
                     if (firstError == null) firstError = cnpjInput;
                     valid = false;
                 }
             }
 
             if (email.isEmpty()) {
-                emailInput.setError("Informe o e-mail");
+                emailInput.setError(getString(R.string.err_email_required));
                 if (firstError == null) firstError = emailInput;
                 valid = false;
             } else if (!PasswordUtils.isValidEmail(email)) {
-                emailInput.setError("E-mail inválido");
+                emailInput.setError(getString(R.string.err_email_invalid));
                 if (firstError == null) firstError = emailInput;
                 valid = false;
             } else if (UserStorage.userExists(this, email)) {
-                emailInput.setError("E-mail já cadastrado");
+                emailInput.setError(getString(R.string.err_email_taken));
                 if (firstError == null) firstError = emailInput;
                 valid = false;
             }
 
             if (password.isEmpty()) {
-                passwordInput.setError("Informe a senha");
+                passwordInput.setError(getString(R.string.err_password_required));
                 if (firstError == null) firstError = passwordInput;
                 valid = false;
             } else if (!PasswordUtils.isStrongPassword(password)) {
-                passwordInput.setError("Mínimo 8 caracteres, com letras e números");
+                passwordInput.setError(getString(R.string.err_password_weak));
                 if (firstError == null) firstError = passwordInput;
                 valid = false;
             }
 
             if (!password.equals(confirmPassword)) {
-                confirmInput.setError("As senhas não coincidem");
+                confirmInput.setError(getString(R.string.err_passwords_mismatch));
                 if (firstError == null) firstError = confirmInput;
                 valid = false;
             }
@@ -118,12 +118,12 @@ public class RegisterActivity extends AppCompatActivity {
             String type = isOng ? UserStorage.TYPE_ONG : UserStorage.TYPE_ADOPTER;
             if (UserStorage.registerUser(this, name, email, password, type, isOng ? cnpj : null)) {
                 UserStorage.login(this, email, password);
-                Toast.makeText(this, "Conta criada com sucesso", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.toast_account_created), Toast.LENGTH_SHORT).show();
                 Class<?> home = isOng ? OngHomeActivity.class : HomeActivity.class;
                 startActivity(new Intent(this, home));
                 finish();
             } else {
-                Toast.makeText(this, "Falha ao criar conta", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.toast_account_create_failed), Toast.LENGTH_SHORT).show();
             }
         });
     }

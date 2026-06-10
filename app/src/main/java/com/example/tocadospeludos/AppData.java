@@ -8,6 +8,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -73,13 +75,58 @@ public class AppData {
                 result.add(event);
             }
         }
+        sortByDate(result);
         return result;
+    }
+
+    public static Event getEventById(Context context, String eventId) {
+        if (eventId == null) {
+            return null;
+        }
+        for (Event event : getAllEvents(context)) {
+            if (eventId.equals(event.getId())) {
+                return event;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Eventos futuros (a partir de nowMillis), ordenados por data crescente.
+     * Eventos legados sem data (dateMillis == 0) são mantidos no fim para não sumirem do feed.
+     */
+    public static List<Event> getUpcomingEvents(Context context, long nowMillis) {
+        List<Event> result = new ArrayList<>();
+        for (Event event : getAllEvents(context)) {
+            if (event.getDateMillis() == 0L || event.getDateMillis() >= nowMillis) {
+                result.add(event);
+            }
+        }
+        sortByDate(result);
+        return result;
+    }
+
+    /** Ordena por dateMillis crescente; eventos sem data (0) vão para o fim. */
+    private static void sortByDate(List<Event> events) {
+        Collections.sort(events, new Comparator<Event>() {
+            @Override
+            public int compare(Event a, Event b) {
+                long da = a.getDateMillis() == 0L ? Long.MAX_VALUE : a.getDateMillis();
+                long db = b.getDateMillis() == 0L ? Long.MAX_VALUE : b.getDateMillis();
+                return Long.compare(da, db);
+            }
+        });
     }
 
     public static boolean addEvent(Context context, String title, String description, String date,
                                    String location, String ownerEmail, String ownerOrg) {
+        return addEvent(context, title, description, date, location, ownerEmail, ownerOrg, 0L);
+    }
+
+    public static boolean addEvent(Context context, String title, String description, String date,
+                                   String location, String ownerEmail, String ownerOrg, long dateMillis) {
         try {
-            Event event = new Event(newId("evt"), title, description, date, location, ownerEmail, ownerOrg);
+            Event event = new Event(newId("evt"), title, description, date, location, ownerEmail, ownerOrg, dateMillis);
             JSONArray array = loadArray(context, KEY_EVENTS);
             array.put(event.toJson());
             saveArray(context, KEY_EVENTS, array);
@@ -87,6 +134,31 @@ public class AppData {
         } catch (JSONException e) {
             return false;
         }
+    }
+
+    public static boolean updateEvent(Context context, String eventId, String title, String description,
+                                      String date, String location, long dateMillis) {
+        if (eventId == null) {
+            return false;
+        }
+        JSONArray array = loadArray(context, KEY_EVENTS);
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject obj = array.optJSONObject(i);
+            if (obj != null && eventId.equals(obj.optString("id"))) {
+                try {
+                    obj.put("title", title);
+                    obj.put("description", description);
+                    obj.put("date", date);
+                    obj.put("location", location);
+                    obj.put("dateMillis", dateMillis);
+                    saveArray(context, KEY_EVENTS, array);
+                    return true;
+                } catch (JSONException e) {
+                    return false;
+                }
+            }
+        }
+        return false;
     }
 
     public static boolean deleteEvent(Context context, String eventId) {
@@ -264,6 +336,58 @@ public class AppData {
         return result;
     }
 
+    /** Candidaturas aprovadas de uma ONG (histórico de adoções concluídas). */
+    public static JSONArray getApprovedApplicationsForOwner(Context context, String ownerEmail) {
+        JSONArray result = new JSONArray();
+        if (ownerEmail == null) {
+            return result;
+        }
+        JSONArray array = loadArray(context, KEY_APPLICATIONS);
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject obj = array.optJSONObject(i);
+            if (obj != null && ownerEmail.equalsIgnoreCase(obj.optString("ownerEmail"))
+                    && STATUS_APPROVED.equals(obj.optString("status"))) {
+                result.put(obj);
+            }
+        }
+        return result;
+    }
+
+    /** Conta candidaturas de uma ONG com determinado status. */
+    public static int countApplicationsForOwner(Context context, String ownerEmail, String status) {
+        JSONArray apps = getApplicationsForOwner(context, ownerEmail);
+        int count = 0;
+        for (int i = 0; i < apps.length(); i++) {
+            JSONObject obj = apps.optJSONObject(i);
+            if (obj != null && status.equals(obj.optString("status"))) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /** Conta animais disponíveis de uma ONG. */
+    public static int countAvailableAnimals(Context context, String ownerEmail) {
+        int count = 0;
+        for (Animal animal : getAnimalsByOwner(context, ownerEmail)) {
+            if (animal.isAvailable()) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /** Conta eventos futuros (não passados) de uma ONG. */
+    public static int countUpcomingEventsForOwner(Context context, String ownerEmail, long nowMillis) {
+        int count = 0;
+        for (Event event : getEventsByOwner(context, ownerEmail)) {
+            if (event.getDateMillis() == 0L || event.getDateMillis() >= nowMillis) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     public static JSONArray getApplicationsForOwner(Context context, String ownerEmail) {
         JSONArray result = new JSONArray();
         if (ownerEmail == null) {
@@ -328,15 +452,17 @@ public class AppData {
         if (prefs(context).getBoolean(KEY_SEEDED, false)) {
             return;
         }
+        long day = 24L * 60 * 60 * 1000;
+        long now = System.currentTimeMillis();
         addEvent(context, "Feira de Adoção",
                 "Conheça novos amigos peludos neste sábado. Diversos pets resgatados estarão disponíveis para adoção responsável.",
-                "20 mai", "Praça Central", "", "Toca dos Peludos");
+                DateUtils.formatDate(now + 7 * day), "Praça Central", "", "Toca dos Peludos", now + 7 * day);
         addEvent(context, "Workshop de Cuidados",
                 "Dicas práticas para você cuidar melhor do seu pet, com veterinários e adestradores convidados.",
-                "28 mai", "Centro Comunitário", "", "Toca dos Peludos");
+                DateUtils.formatDate(now + 15 * day), "Centro Comunitário", "", "Toca dos Peludos", now + 15 * day);
         addEvent(context, "Passeio Pet Friendly",
                 "Encontro ao ar livre para passeios e diversão. Traga seu pet e faça novos amigos.",
-                "05 jun", "Parque da Cidade", "", "Toca dos Peludos");
+                DateUtils.formatDate(now + 23 * day), "Parque da Cidade", "", "Toca dos Peludos", now + 23 * day);
         prefs(context).edit().putBoolean(KEY_SEEDED, true).apply();
     }
 }

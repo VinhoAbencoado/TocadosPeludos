@@ -29,6 +29,7 @@
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:src="@drawable/ico_pata"
+            android:contentDescription="@null"
                 android:scaleType="fitCenter"
                 app:tint="@color/white" />
 
@@ -36,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:text="Toca dos Peludos"
+                android:text="@string/app_name"
                 android:textColor="@color/white"
                 android:textSize="28sp"
                 android:textStyle="bold"
@@ -57,7 +58,7 @@
                 style="@style/Text.Heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Criar conta"
+                android:text="@string/register_title"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="4dp" />
 
@@ -65,14 +66,14 @@
                 style="@style/Text.Body"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Preencha os dados para começar"
+                android:text="@string/register_subtitle"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="20dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tipo de conta"
+                android:text="@string/register_account_type"
                 android:textStyle="bold"
                 android:textColor="@color/text_primary"
                 android:layout_marginBottom="8dp" />
@@ -89,7 +90,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Sou adotante"
+                    android:text="@string/register_type_adopter"
                     android:textColor="@color/text_primary"
                     android:buttonTint="@color/green_primary"
                     android:checked="true" />
@@ -99,7 +100,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Sou ONG"
+                    android:text="@string/register_type_ong"
                     android:textColor="@color/text_primary"
                     android:buttonTint="@color/green_primary" />
 
@@ -110,7 +111,7 @@
                 style="@style/FieldInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nome"
+                android:hint="@string/hint_name"
                 android:inputType="textPersonName"
                 android:layout_marginBottom="14dp" />
 
@@ -119,7 +120,7 @@
                 style="@style/FieldInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="CNPJ da ONG"
+                android:hint="@string/hint_cnpj_ong"
                 android:inputType="number"
                 android:visibility="gone"
                 android:layout_marginBottom="14dp" />
@@ -129,7 +130,7 @@
                 style="@style/FieldInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="E-mail"
+                android:hint="@string/hint_email"
                 android:inputType="textEmailAddress"
                 android:layout_marginBottom="14dp" />
 
@@ -138,7 +139,7 @@
                 style="@style/FieldInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Senha"
+                android:hint="@string/hint_password"
                 android:inputType="textPassword"
                 android:layout_marginBottom="14dp" />
 
@@ -147,7 +148,7 @@
                 style="@style/FieldInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Confirmar senha"
+                android:hint="@string/hint_confirm_password"
                 android:inputType="textPassword"
                 android:layout_marginBottom="24dp" />
 
@@ -156,14 +157,14 @@
                 style="@style/PrimaryButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Registrar"
+                android:text="@string/register_button"
                 android:layout_marginBottom="8dp" />
 
             <TextView
                 android:id="@+id/tvLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Já tem conta? Entrar"
+                android:text="@string/register_login_link"
                 android:textColor="@color/dark_green"
                 android:textStyle="bold"
                 android:padding="8dp"

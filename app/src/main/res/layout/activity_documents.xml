@@ -19,13 +19,13 @@
             style="@style/OutlineButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Voltar"
+            android:text="@string/action_back"
             android:layout_marginBottom="16dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Documentos para adoção"
+            android:text="@string/documents_title"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@color/dark_green"
@@ -34,8 +34,23 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Preencha seus dados pessoais e anexe os documentos exigidos para validar oficialmente a adoção. Em cada documento você pode anexar uma foto ou um arquivo PDF."
+            android:text="@string/documents_intro"
             android:textSize="14sp"
+            android:layout_marginBottom="12dp" />
+
+        <TextView
+            android:id="@+id/tvProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0 de 9 concluídos"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="@color/status_pending"
+            android:background="@drawable/bg_chip_pending"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
             android:layout_marginBottom="24dp" />
 
         <!-- Os campos do formulário são gerados dinamicamente em DocumentActivity -->
@@ -50,7 +65,7 @@
             style="@style/PrimaryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enviar documentos"
+            android:text="@string/documents_submit"
             android:layout_marginTop="8dp" />
 
     </LinearLayout>

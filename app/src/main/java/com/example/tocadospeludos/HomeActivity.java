@@ -57,7 +57,7 @@ public class HomeActivity extends AppCompatActivity {
         TextView welcomeText = findViewById(R.id.welcomeText);
         String userName = UserStorage.getCurrentUserName(this);
         if (userName != null) {
-            welcomeText.setText("Olá, " + userName + "! Bem-vindo ao seu painel");
+            welcomeText.setText(getString(R.string.home_greeting, userName));
         }
 
         BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigation);
@@ -92,7 +92,7 @@ public class HomeActivity extends AppCompatActivity {
             try {
                 startActivity(android.content.Intent.createChooser(emailIntent, "Enviar e-mail para o suporte"));
             } catch (android.content.ActivityNotFoundException e) {
-                Toast.makeText(this, "Nenhum app de e-mail encontrado. Escreva para suporte@tocadospeludos.com.br", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.toast_no_email_app), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -144,7 +144,7 @@ public class HomeActivity extends AppCompatActivity {
         String phone = UserStorage.getCurrentUserPhone(this);
         nameView.setText(name != null ? name : "-");
         emailView.setText(email != null ? email : "-");
-        phoneView.setText("Telefone: " + (phone != null && !phone.isEmpty() ? phone : "-"));
+        phoneView.setText(getString(R.string.card_phone_label, phone != null && !phone.isEmpty() ? phone : "-"));
     }
 
     private void showEditProfileDialog() {
@@ -155,46 +155,46 @@ public class HomeActivity extends AppCompatActivity {
         layout.setPadding(dp(20), dp(8), dp(20), 0);
 
         EditText nameField = new EditText(this);
-        nameField.setHint("Nome");
+        nameField.setHint(getString(R.string.hint_name));
         nameField.setInputType(android.text.InputType.TYPE_CLASS_TEXT
                 | android.text.InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
         nameField.setText(UserStorage.getCurrentUserName(this));
         layout.addView(nameField);
 
         EditText phoneField = new EditText(this);
-        phoneField.setHint("Telefone");
+        phoneField.setHint(getString(R.string.hint_phone));
         phoneField.setInputType(android.text.InputType.TYPE_CLASS_PHONE);
         String currentPhone = UserStorage.getCurrentUserPhone(this);
         if (currentPhone != null) phoneField.setText(currentPhone);
         layout.addView(phoneField);
 
         AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle("Editar perfil")
+                .setTitle(getString(R.string.dlg_edit_profile))
                 .setView(layout)
-                .setPositiveButton("Salvar", null)
-                .setNegativeButton("Cancelar", null)
+                .setPositiveButton(getString(R.string.dialog_save), null)
+                .setNegativeButton(getString(R.string.dialog_cancel), null)
                 .create();
         dialog.setOnShowListener(d -> dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
             String name = nameField.getText().toString().trim();
             String phone = phoneField.getText().toString().trim();
             if (name.isEmpty()) {
-                nameField.setError("Informe o nome");
+                nameField.setError(getString(R.string.err_name_required));
                 return;
             }
             if (!phone.isEmpty() && !PasswordUtils.isValidPhone(phone)) {
-                phoneField.setError("Telefone inválido (use DDD + número)");
+                phoneField.setError(getString(R.string.err_phone_invalid));
                 return;
             }
             if (UserStorage.updateProfile(this, email, name, phone, null)) {
-                Toast.makeText(this, "Perfil atualizado", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.toast_profile_updated), Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
                 refreshProfileInfo();
                 TextView welcome = findViewById(R.id.welcomeText);
                 if (welcome != null) {
-                    welcome.setText("Olá, " + name + "! Bem-vindo ao seu painel");
+                    welcome.setText(getString(R.string.home_greeting, name));
                 }
             } else {
-                Toast.makeText(this, "Não foi possível atualizar o perfil", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.toast_profile_update_failed), Toast.LENGTH_SHORT).show();
             }
         }));
         dialog.show();
@@ -207,39 +207,39 @@ public class HomeActivity extends AppCompatActivity {
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setPadding(dp(20), dp(8), dp(20), 0);
 
-        EditText currentField = passwordField("Senha atual");
-        EditText newField = passwordField("Nova senha");
-        EditText confirmField = passwordField("Confirmar nova senha");
+        EditText currentField = passwordField(getString(R.string.hint_current_password));
+        EditText newField = passwordField(getString(R.string.hint_new_password));
+        EditText confirmField = passwordField(getString(R.string.hint_confirm_new_password));
         layout.addView(currentField);
         layout.addView(newField);
         layout.addView(confirmField);
 
         AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle("Alterar senha")
+                .setTitle(getString(R.string.dlg_change_password))
                 .setView(layout)
-                .setPositiveButton("Salvar", null)
-                .setNegativeButton("Cancelar", null)
+                .setPositiveButton(getString(R.string.dialog_save), null)
+                .setNegativeButton(getString(R.string.dialog_cancel), null)
                 .create();
         dialog.setOnShowListener(d -> dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
             String current = currentField.getText().toString();
             String newPass = newField.getText().toString();
             String confirm = confirmField.getText().toString();
             if (!PasswordUtils.isStrongPassword(newPass)) {
-                newField.setError("Mínimo 8 caracteres, com letras e números");
+                newField.setError(getString(R.string.err_password_weak));
                 return;
             }
             if (!newPass.equals(confirm)) {
-                confirmField.setError("As senhas não coincidem");
+                confirmField.setError(getString(R.string.err_passwords_mismatch));
                 return;
             }
             int result = UserStorage.changePassword(this, email, current, newPass);
             if (result == UserStorage.PASSWORD_OK) {
-                Toast.makeText(this, "Senha alterada com sucesso", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.toast_password_changed), Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             } else if (result == UserStorage.PASSWORD_WRONG_CURRENT) {
-                currentField.setError("Senha atual incorreta");
+                currentField.setError(getString(R.string.err_current_password_wrong));
             } else {
-                Toast.makeText(this, "Não foi possível alterar a senha", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.toast_password_change_failed), Toast.LENGTH_SHORT).show();
             }
         }));
         dialog.show();
@@ -255,32 +255,32 @@ public class HomeActivity extends AppCompatActivity {
 
     private void confirmLogout() {
         new AlertDialog.Builder(this)
-                .setTitle("Sair")
-                .setMessage("Deseja realmente sair da sua conta?")
-                .setPositiveButton("Sair", (d, w) -> {
+                .setTitle(getString(R.string.dlg_logout))
+                .setMessage(getString(R.string.msg_logout_confirm))
+                .setPositiveButton(getString(R.string.dlg_logout), (d, w) -> {
                     UserStorage.logout(this);
                     startActivity(new Intent(this, MainActivity.class));
                     finish();
                 })
-                .setNegativeButton("Cancelar", null)
+                .setNegativeButton(getString(R.string.dialog_cancel), null)
                 .show();
     }
 
     private void confirmDeleteAccount() {
         new AlertDialog.Builder(this)
-                .setTitle("Excluir conta")
-                .setMessage("Esta ação é permanente e apagará seus dados locais (perfil, documentos e inscrições). Deseja continuar?")
-                .setPositiveButton("Excluir", (d, w) -> {
+                .setTitle(getString(R.string.dlg_delete_account))
+                .setMessage(getString(R.string.msg_delete_account_adopter))
+                .setPositiveButton(getString(R.string.dialog_delete), (d, w) -> {
                     String currentEmail = UserStorage.getCurrentUserEmail(this);
                     if (UserStorage.deleteAccount(this, currentEmail)) {
-                        Toast.makeText(this, "Conta excluída", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getString(R.string.toast_account_deleted), Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(this, MainActivity.class));
                         finish();
                     } else {
-                        Toast.makeText(this, "Falha ao excluir conta", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getString(R.string.toast_account_delete_failed), Toast.LENGTH_SHORT).show();
                     }
                 })
-                .setNegativeButton("Cancelar", null)
+                .setNegativeButton(getString(R.string.dialog_cancel), null)
                 .show();
     }
 
@@ -302,7 +302,7 @@ public class HomeActivity extends AppCompatActivity {
         }
         container.removeAllViews();
 
-        java.util.List<Event> events = AppData.getAllEvents(this);
+        java.util.List<Event> events = AppData.getUpcomingEvents(this, DateUtils.startOfToday());
         if (empty != null) {
             empty.setVisibility(events.isEmpty() ? View.VISIBLE : View.GONE);
         }
@@ -428,7 +428,7 @@ public class HomeActivity extends AppCompatActivity {
 
         if (!animal.getOwnerOrg().isEmpty()) {
             TextView org = new TextView(this);
-            org.setText("Por " + animal.getOwnerOrg());
+            org.setText(getString(R.string.card_by_org_simple, animal.getOwnerOrg()));
             org.setTextSize(12);
             org.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
             card.addView(org);
@@ -453,21 +453,21 @@ public class HomeActivity extends AppCompatActivity {
 
         boolean alreadyApplied = AppData.hasApplied(this, animal.getId(), email);
         if (alreadyApplied) {
-            apply.setText("Candidatura enviada");
+            apply.setText(getString(R.string.card_application_sent));
             apply.setEnabled(false);
             apply.setBackgroundResource(R.drawable.bg_button_outline);
             apply.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
         } else {
-            apply.setText("Candidatar-se à adoção");
+            apply.setText(getString(R.string.card_apply));
             apply.setBackgroundResource(R.drawable.bg_button_primary);
             apply.setTextColor(ContextCompat.getColor(this, R.color.white));
             apply.setOnClickListener(v -> {
                 String name = UserStorage.getCurrentUserName(this);
                 if (AppData.addApplication(this, animal, email, name)) {
-                    Toast.makeText(this, "Candidatura enviada para " + animal.getOwnerOrg(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.toast_application_sent_to, animal.getOwnerOrg()), Toast.LENGTH_SHORT).show();
                     renderAnimals();
                 } else {
-                    Toast.makeText(this, "Você já se candidatou a este animal", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.toast_already_applied), Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -562,7 +562,41 @@ public class HomeActivity extends AppCompatActivity {
         code.setLayoutParams(codeParams);
         card.addView(code);
 
+        final String eventId = reg.optString("eventId", "");
+        final String eventTitle = reg.optString("title", "este evento");
+        Button cancel = new Button(this);
+        cancel.setAllCaps(false);
+        cancel.setTypeface(cancel.getTypeface(), android.graphics.Typeface.BOLD);
+        cancel.setText(getString(R.string.dlg_cancel_registration));
+        cancel.setBackgroundResource(R.drawable.bg_button_outline);
+        cancel.setTextColor(ContextCompat.getColor(this, R.color.danger));
+        cancel.setMinHeight(dp(44));
+        cancel.setStateListAnimator(null);
+        LinearLayout.LayoutParams cancelParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        cancelParams.setMargins(0, (int) (12 * density), 0, 0);
+        cancel.setLayoutParams(cancelParams);
+        cancel.setOnClickListener(v -> confirmCancelRegistration(eventId, eventTitle));
+        card.addView(cancel);
+
         return card;
+    }
+
+    private void confirmCancelRegistration(String eventId, String eventTitle) {
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.dlg_cancel_registration))
+                .setMessage(getString(R.string.msg_cancel_registration, eventTitle))
+                .setPositiveButton(getString(R.string.dlg_cancel_registration), (d, w) -> {
+                    String email = UserStorage.getCurrentUserEmail(this);
+                    if (UserStorage.cancelEventRegistration(this, email, eventId)) {
+                        Toast.makeText(this, getString(R.string.toast_registration_canceled), Toast.LENGTH_SHORT).show();
+                        renderRegistrations();
+                    } else {
+                        Toast.makeText(this, getString(R.string.toast_cancel_failed), Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton(getString(R.string.btn_back), null)
+                .show();
     }
 
     private void refreshDocumentStatus() {

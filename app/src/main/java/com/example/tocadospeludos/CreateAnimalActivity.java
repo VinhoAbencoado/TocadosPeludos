@@ -1,10 +1,8 @@
 package com.example.tocadospeludos;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.OpenableColumns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -21,6 +19,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class CreateAnimalActivity extends AppCompatActivity {
 
     private static final String[] ACCEPTED_TYPES = {"image/*"};
+    private static final String STATE_PHOTO_URI = "state_photo_uri";
 
     private Uri photoUri;
     private TextView photoName;
@@ -47,9 +46,18 @@ public class CreateAnimalActivity extends AppCompatActivity {
         EditText descriptionInput = findViewById(R.id.etAnimalDescription);
         photoName = findViewById(R.id.tvPhotoName);
 
+        // Restaura a foto selecionada após rotação.
+        if (savedInstanceState != null) {
+            String saved = savedInstanceState.getString(STATE_PHOTO_URI, null);
+            if (saved != null) {
+                photoUri = Uri.parse(saved);
+            }
+        }
+        updatePhotoLabel();
+
         photoPicker = registerForActivityResult(new ActivityResultContracts.OpenDocument(), uri -> {
             photoUri = persist(uri);
-            photoName.setText(photoUri == null ? "Nenhuma foto anexada" : "Anexada: " + getDisplayName(photoUri));
+            updatePhotoLabel();
         });
 
         findViewById(R.id.btnAttachPhoto).setOnClickListener(v -> photoPicker.launch(ACCEPTED_TYPES));
@@ -61,7 +69,7 @@ public class CreateAnimalActivity extends AppCompatActivity {
             String description = descriptionInput.getText().toString().trim();
 
             if (name.isEmpty() || species.isEmpty() || description.isEmpty()) {
-                Toast.makeText(this, "Preencha nome, espécie e descrição", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.toast_fill_animal_fields), Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -69,12 +77,29 @@ public class CreateAnimalActivity extends AppCompatActivity {
             String org = UserStorage.getCurrentUserName(this);
             String photo = photoUri != null ? photoUri.toString() : "";
             if (AppData.addAnimal(this, name, species, description, photo, email, org)) {
-                Toast.makeText(this, "Animal cadastrado", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.toast_animal_created), Toast.LENGTH_SHORT).show();
                 finish();
             } else {
-                Toast.makeText(this, "Falha ao cadastrar animal", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.toast_animal_create_failed), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // EditTexts com id são salvos automaticamente; aqui guardamos só a foto escolhida.
+        if (photoUri != null) {
+            outState.putString(STATE_PHOTO_URI, photoUri.toString());
+        }
+    }
+
+    private void updatePhotoLabel() {
+        if (photoName != null) {
+            photoName.setText(photoUri == null
+                    ? getString(R.string.no_photo_attached)
+                    : getString(R.string.photo_attached));
+        }
     }
 
     private Uri persist(Uri uri) {
@@ -87,23 +112,5 @@ public class CreateAnimalActivity extends AppCompatActivity {
             // segue sem permissão persistente
         }
         return uri;
-    }
-
-    private String getDisplayName(Uri uri) {
-        String name = null;
-        try (Cursor cursor = getContentResolver().query(uri, null, null, null, null)) {
-            if (cursor != null && cursor.moveToFirst()) {
-                int index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-                if (index >= 0) {
-                    name = cursor.getString(index);
-                }
-            }
-        } catch (Exception e) {
-            // usa fallback
-        }
-        if (name == null) {
-            name = uri.getLastPathSegment();
-        }
-        return name != null ? name : "foto";
     }
 }

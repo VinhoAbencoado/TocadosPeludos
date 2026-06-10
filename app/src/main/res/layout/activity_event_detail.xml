@@ -18,7 +18,7 @@
             style="@style/OutlineButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Voltar"
+            android:text="@string/action_back"
             android:layout_marginBottom="16dp" />
 
         <LinearLayout
@@ -94,7 +94,7 @@
                 style="@style/PrimaryButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Inscrever-se e gerar QR Code" />
+                android:text="@string/event_register_button" />
 
             <!-- Bloco do ingresso/QR Code, visível apenas após a inscrição -->
             <LinearLayout
@@ -109,7 +109,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Seu ingresso"
+                    android:text="@string/event_ticket_title"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:gravity="center"
@@ -118,7 +118,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Apresente este QR Code na entrada do evento. Ele também fica salvo no seu perfil."
+                    android:text="@string/event_ticket_desc"
                     android:textSize="13sp"
                     android:gravity="center"
                     android:layout_marginBottom="16dp" />

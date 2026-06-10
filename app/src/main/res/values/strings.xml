@@ -1,3 +1,285 @@
 <resources>
     <string name="app_name">Toca dos Peludos</string>
+
+    <!-- Ações comuns -->
+    <string name="action_back">Voltar</string>
+    <string name="action_logout">Sair</string>
+    <string name="action_delete_account">Deletar conta</string>
+    <string name="action_change_password">Alterar senha</string>
+
+    <!-- Login (activity_main) -->
+    <string name="login_welcome">Bem-vindo!</string>
+    <string name="login_subtitle">Acesse sua conta para continuar</string>
+    <string name="hint_email">E-mail</string>
+    <string name="hint_password">Senha</string>
+    <string name="login_button">Entrar</string>
+    <string name="login_forgot_password">Esqueci minha senha</string>
+    <string name="login_register_link">Ainda não tem conta? Registrar</string>
+
+    <!-- Cadastro (activity_register) -->
+    <string name="register_title">Criar conta</string>
+    <string name="register_subtitle">Preencha os dados para começar</string>
+    <string name="register_account_type">Tipo de conta</string>
+    <string name="register_type_adopter">Sou adotante</string>
+    <string name="register_type_ong">Sou ONG</string>
+    <string name="hint_name">Nome</string>
+    <string name="hint_cnpj_ong">CNPJ da ONG</string>
+    <string name="hint_confirm_password">Confirmar senha</string>
+    <string name="register_button">Registrar</string>
+    <string name="register_login_link">Já tem conta? Entrar</string>
+
+    <!-- Recuperação (activity_recover) -->
+    <string name="recover_title">Recuperar conta</string>
+    <string name="recover_subtitle">Informe seu e-mail para receber as instruções de recuperação.</string>
+    <string name="recover_button">Enviar recuperação</string>
+    <string name="recover_back_login">Voltar ao login</string>
+
+    <!-- Home do adotante (activity_home) -->
+    <string name="home_welcome">Olá! Bem-vindo ao seu painel</string>
+    <string name="home_complete_profile_title">Complete seu perfil</string>
+    <string name="home_complete_profile_desc">Envie seus documentos para aproveitar todos os recursos e validar sua adoção.</string>
+    <string name="home_complete_account">Completar conta</string>
+    <string name="home_featured_events">Eventos em destaque</string>
+    <string name="home_no_events">Nenhum evento disponível no momento.</string>
+    <string name="home_adopt_a_friend">Adote um amigo</string>
+    <string name="home_search_animals">Buscar por nome, espécie ou ONG</string>
+    <string name="home_no_animals">Ainda não há animais cadastrados para adoção.</string>
+    <string name="profile_title">Perfil</string>
+    <string name="profile_edit">Editar perfil</string>
+    <string name="profile_my_applications">Minhas candidaturas</string>
+    <string name="docs_required_title">Documentos necessários para adoção oficial</string>
+    <string name="docs_personal_data">Dados pessoais: nome completo, data de nascimento, CPF, RG, telefone e endereço.</string>
+    <string name="docs_item_id">• Documento de identidade (RG ou CPF)</string>
+    <string name="docs_item_residence">• Comprovante de residência</string>
+    <string name="docs_item_declaration">• Termo de responsabilidade assinado</string>
+    <string name="docs_item_authorization">• Autorização do responsável (se menor de idade)</string>
+    <string name="docs_fill_prompt">Preencha estes campos para que sua adoção seja validada oficialmente.</string>
+    <string name="docs_fill_button">Preencher documentos</string>
+    <string name="my_registrations">Minhas inscrições</string>
+    <string name="my_registrations_empty">Você ainda não se inscreveu em nenhum evento. Toque em um evento na página inicial para se inscrever.</string>
+    <string name="about_title">Sobre</string>
+    <string name="about_app_title">Sobre o aplicativo</string>
+    <string name="about_app_desc">Toca dos Peludos ajuda a conectar adotantes e eventos pet friendly, centralizando serviços de adoção e cuidados.</string>
+    <string name="about_version">Versão 1.0</string>
+    <string name="support_title">Contato e suporte</string>
+    <string name="support_desc">Precisa de ajuda? Fale com nossa equipe pelo e-mail suporte@tocadospeludos.com.br.</string>
+    <string name="support_button">Falar com o suporte</string>
+
+    <!-- Detalhe do animal (activity_animal_detail) -->
+    <string name="animal_about">Sobre</string>
+    <string name="animal_apply">Candidatar-se à adoção</string>
+    <string name="animal_status_available">Disponível</string>
+    <string name="cd_animal_photo">Foto do animal</string>
+
+    <!-- Minhas candidaturas (activity_my_applications) -->
+    <string name="my_applications_title">Minhas candidaturas</string>
+    <string name="my_applications_empty">Você ainda não se candidatou a nenhum animal. Abra um animal no feed e toque em candidatar-se.</string>
+
+    <!-- Cadastrar animal (activity_create_animal) -->
+    <string name="create_animal_title">Cadastrar animal</string>
+    <string name="label_name_required">Nome *</string>
+    <string name="hint_animal_name">Ex.: Bidu</string>
+    <string name="label_species_required">Espécie / tipo *</string>
+    <string name="hint_animal_species">Ex.: Cachorro, Gato...</string>
+    <string name="label_description_required">Descrição *</string>
+    <string name="hint_animal_description">Porte, idade, temperamento, cuidados...</string>
+    <string name="label_photo_optional">Foto (opcional)</string>
+    <string name="attach_photo">Anexar foto</string>
+    <string name="no_photo_attached">Nenhuma foto anexada</string>
+    <string name="photo_attached">Foto anexada</string>
+    <string name="save_animal">Salvar animal</string>
+
+    <!-- Criar/editar evento (activity_create_event) -->
+    <string name="create_event_title">Novo evento</string>
+    <string name="label_title_required">Título *</string>
+    <string name="hint_event_title">Ex.: Feira de Adoção</string>
+    <string name="label_date_required">Data *</string>
+    <string name="hint_event_date">Toque para escolher a data</string>
+    <string name="label_location_required">Local *</string>
+    <string name="hint_event_location">Ex.: Praça Central</string>
+    <string name="hint_event_description">Detalhes do evento</string>
+    <string name="publish_event">Publicar evento</string>
+
+    <!-- Documentos (activity_documents) -->
+    <string name="documents_title">Documentos para adoção</string>
+    <string name="documents_intro">Preencha seus dados pessoais e anexe os documentos exigidos para validar oficialmente a adoção. Em cada documento você pode anexar uma foto ou um arquivo PDF.</string>
+    <string name="documents_submit">Enviar documentos</string>
+
+    <!-- Detalhe do evento (activity_event_detail) -->
+    <string name="event_register_button">Inscrever-se e gerar QR Code</string>
+    <string name="event_ticket_title">Seu ingresso</string>
+    <string name="event_ticket_desc">Apresente este QR Code na entrada do evento. Ele também fica salvo no seu perfil.</string>
+    <string name="cd_qr_code">QR Code do ingresso</string>
+
+    <!-- Painel da ONG (activity_ong_home) -->
+    <string name="ong_panel">Painel da ONG</string>
+    <string name="ong_count_events">Eventos ativos</string>
+    <string name="ong_count_animals">Animais disponíveis</string>
+    <string name="ong_count_pending">Candidaturas pendentes</string>
+    <string name="ong_my_events">Meus eventos</string>
+    <string name="ong_new_event">+ Novo evento</string>
+    <string name="ong_no_events">Você ainda não criou eventos. Crie um para que apareça no app dos adotantes.</string>
+    <string name="ong_animals_for_adoption">Animais para adoção</string>
+    <string name="ong_new_animal">+ Cadastrar animal</string>
+    <string name="ong_no_animals">Nenhum animal cadastrado ainda.</string>
+    <string name="ong_applications">Candidaturas de adoção</string>
+    <string name="ong_no_applications">Nenhuma candidatura recebida. Elas aparecem aqui quando um adotante se candidata a um dos seus animais.</string>
+    <string name="ong_account">Conta da ONG</string>
+    <string name="ong_edit_data">Editar dados da ONG</string>
+    <string name="ong_adoption_history">Histórico de adoções</string>
+
+    <!-- Histórico de adoções (activity_adoption_history) -->
+    <string name="adoption_history_title">Histórico de adoções</string>
+    <string name="adoption_history_empty">Nenhuma adoção concluída ainda. Quando você aprovar uma candidatura, ela aparece aqui.</string>
+
+    <!-- Perfil público da ONG (activity_ong_profile) -->
+    <string name="ong_profile_title">Perfil da ONG</string>
+    <string name="ong_profile_contact">Contato</string>
+    <string name="ong_profile_no_animals">Esta ONG não tem animais disponíveis no momento.</string>
+
+    <!-- Check-in (activity_check_in) -->
+    <string name="checkin_title">Check-in do evento</string>
+    <string name="checkin_validate_ticket">Validar ingresso</string>
+    <string name="checkin_instructions">Leia o QR Code do adotante (selecione a imagem) ou digite o código do ingresso.</string>
+    <string name="checkin_scan_qr">Ler QR de uma imagem</string>
+    <string name="checkin_hint_code">Código do ingresso (ex.: TP-XXXXXXXX)</string>
+    <string name="checkin_validate_code">Validar código</string>
+    <string name="checkin_participants">Participantes inscritos</string>
+    <string name="checkin_no_participants">Ninguém se inscreveu neste evento ainda.</string>
+
+    <!-- contentDescription do logo (pata) -->
+    <string name="cd_app_logo">Logotipo Toca dos Peludos</string>
+
+    <!-- ===== Strings usadas em código (Toasts, diálogos, cards dinâmicos) ===== -->
+
+    <!-- Botões/rótulos comuns de diálogo -->
+    <string name="dialog_cancel">Cancelar</string>
+    <string name="dialog_save">Salvar</string>
+    <string name="dialog_close">Fechar</string>
+    <string name="dialog_delete">Excluir</string>
+    <string name="dialog_understood">Entendi</string>
+
+    <!-- Hints de diálogos -->
+    <string name="hint_phone">Telefone</string>
+    <string name="hint_cnpj">CNPJ</string>
+    <string name="hint_species">Espécie / tipo</string>
+    <string name="hint_description">Descrição</string>
+    <string name="hint_ong_name">Nome da ONG</string>
+    <string name="hint_current_password">Senha atual</string>
+    <string name="hint_new_password">Nova senha</string>
+    <string name="hint_confirm_new_password">Confirmar nova senha</string>
+
+    <!-- Erros de campo (setError) -->
+    <string name="err_passwords_mismatch">As senhas não coincidem</string>
+    <string name="err_cnpj_invalid">CNPJ inválido (14 dígitos)</string>
+    <string name="err_cpf_invalid">CPF inválido</string>
+    <string name="err_date_invalid">Data inválida (use DD/MM/AAAA)</string>
+    <string name="err_code_required">Digite o código do ingresso</string>
+    <string name="err_email_invalid">E-mail inválido</string>
+    <string name="err_email_taken">E-mail já cadastrado</string>
+    <string name="err_login_invalid">E-mail ou senha incorretos</string>
+    <string name="err_password_required">Informe a senha</string>
+    <string name="err_cnpj_required">Informe o CNPJ da ONG</string>
+    <string name="err_email_required">Informe o e-mail</string>
+    <string name="err_name_required">Informe o nome</string>
+    <string name="err_ong_name_required">Informe o nome da ONG</string>
+    <string name="err_password_weak">Mínimo 8 caracteres, com letras e números</string>
+    <string name="err_current_password_wrong">Senha atual incorreta</string>
+    <string name="err_phone_invalid">Telefone inválido (DDD + número)</string>
+
+    <!-- Títulos de diálogo -->
+    <string name="dlg_change_password">Alterar senha</string>
+    <string name="dlg_cancel_registration">Cancelar inscrição</string>
+    <string name="dlg_docs_incomplete">Documentos incompletos</string>
+    <string name="dlg_edit_animal">Editar animal</string>
+    <string name="dlg_edit_ong">Editar dados da ONG</string>
+    <string name="dlg_edit_profile">Editar perfil</string>
+    <string name="dlg_delete_animal">Excluir animal</string>
+    <string name="dlg_delete_account">Excluir conta</string>
+    <string name="dlg_delete_event">Excluir evento</string>
+    <string name="dlg_recover_sim">Recuperação de senha (simulação)</string>
+    <string name="dlg_reject_application">Recusar candidatura</string>
+    <string name="dlg_logout">Sair</string>
+
+    <!-- Mensagens de diálogo -->
+    <string name="msg_logout_confirm">Deseja realmente sair da sua conta?</string>
+    <string name="msg_delete_account_adopter">Esta ação é permanente e apagará seus dados locais (perfil, documentos e inscrições). Deseja continuar?</string>
+    <string name="msg_delete_account_ong">Esta ação é permanente e apagará os dados locais da ONG. Deseja continuar?</string>
+    <string name="msg_recover_sim">Este aplicativo funciona apenas localmente, sem servidor de e-mail. Em uma versão com backend, enviaríamos as instruções para %1$s.\n\nPor enquanto, esta etapa é apenas demonstrativa.</string>
+    <string name="msg_docs_incomplete">Seus documentos de adoção ainda não estão completos. Você pode se candidatar mesmo assim, mas a ONG poderá pedir os documentos antes de aprovar.</string>
+    <string name="msg_cancel_registration">Deseja cancelar sua inscrição em \"%1$s\"? O QR Code será removido do seu perfil.</string>
+    <string name="msg_delete_animal">Deseja excluir \"%1$s\"? Esta ação não pode ser desfeita.</string>
+    <string name="msg_delete_event">Deseja excluir \"%1$s\"? Esta ação não pode ser desfeita.</string>
+    <string name="msg_reject_application">Deseja recusar a candidatura de %1$s?</string>
+
+    <!-- Botões positivos específicos -->
+    <string name="btn_cancel_registration">Cancelar inscrição</string>
+    <string name="btn_apply_anyway">Candidatar mesmo assim</string>
+    <string name="btn_reject">Recusar</string>
+    <string name="btn_back">Voltar</string>
+
+    <!-- Toasts -->
+    <string name="toast_animal_updated">Animal atualizado</string>
+    <string name="toast_animal_created">Animal cadastrado</string>
+    <string name="toast_animal_deleted">Animal excluído</string>
+    <string name="toast_animal_unavailable">Animal indisponível</string>
+    <string name="toast_application_approved">Candidatura aprovada</string>
+    <string name="toast_application_sent_to">Candidatura enviada para %1$s</string>
+    <string name="toast_application_rejected">Candidatura recusada</string>
+    <string name="toast_checkin_confirmed">Check-in confirmado: %1$s</string>
+    <string name="toast_account_created">Conta criada com sucesso</string>
+    <string name="toast_account_deleted">Conta excluída</string>
+    <string name="toast_code_no_match">Código não corresponde a nenhuma inscrição deste evento</string>
+    <string name="toast_data_updated">Dados atualizados</string>
+    <string name="toast_documents_saved">Documentos salvos com sucesso</string>
+    <string name="toast_event_not_yours">Este evento não é da sua ONG</string>
+    <string name="toast_event_updated">Evento atualizado</string>
+    <string name="toast_event_deleted">Evento excluído</string>
+    <string name="toast_event_unavailable">Evento indisponível</string>
+    <string name="toast_event_published">Evento publicado</string>
+    <string name="toast_animal_create_failed">Falha ao cadastrar animal</string>
+    <string name="toast_account_create_failed">Falha ao criar conta</string>
+    <string name="toast_account_delete_failed">Falha ao excluir conta</string>
+    <string name="toast_docs_prepare_failed">Falha ao preparar os documentos</string>
+    <string name="toast_docs_save_failed">Falha ao salvar documentos</string>
+    <string name="toast_event_save_failed">Falha ao salvar evento</string>
+    <string name="toast_registration_canceled">Inscrição cancelada</string>
+    <string name="toast_registration_confirmed">Inscrição confirmada! QR Code salvo no seu perfil.</string>
+    <string name="toast_no_email_app">Nenhum app de e-mail encontrado. Escreva para suporte@tocadospeludos.com.br</string>
+    <string name="toast_no_attachment_field">Nenhum arquivo anexado neste campo</string>
+    <string name="toast_attachment_open_failed">Não foi possível abrir o anexo</string>
+    <string name="toast_password_change_failed">Não foi possível alterar a senha</string>
+    <string name="toast_update_failed">Não foi possível atualizar</string>
+    <string name="toast_profile_update_failed">Não foi possível atualizar o perfil</string>
+    <string name="toast_cancel_failed">Não foi possível cancelar</string>
+    <string name="toast_registration_failed">Não foi possível concluir a inscrição</string>
+    <string name="toast_copy_fallback">Não foi possível copiar o arquivo; usando o original.</string>
+    <string name="toast_qr_read_failed">Não foi possível ler um QR Code nesta imagem</string>
+    <string name="toast_profile_updated">Perfil atualizado</string>
+    <string name="toast_fill_animal_fields">Preencha nome, espécie e descrição</string>
+    <string name="toast_fill_event_fields">Preencha todos os campos (toque em Data para escolher)</string>
+    <string name="toast_fill_attach_missing">Preencha/anexe: %1$s</string>
+    <string name="toast_password_changed">Senha alterada com sucesso</string>
+    <string name="toast_already_applied">Você já se candidatou a este animal</string>
+
+    <!-- Cards/rótulos dinâmicos -->
+    <string name="card_adoption_done">Adoção concluída</string>
+    <string name="card_attach_photo_pdf">Anexar foto ou PDF</string>
+    <string name="card_animal_already_adopted">Animal já adotado</string>
+    <string name="card_apply">Candidatar-se à adoção</string>
+    <string name="card_application_sent">Candidatura enviada</string>
+    <string name="card_edit_event">Editar evento</string>
+    <string name="card_save_changes">Salvar alterações</string>
+    <string name="card_view">Ver</string>
+    <string name="card_already_registered">Você já está inscrito</string>
+    <string name="card_adopted_by">Adotado por: %1$s</string>
+    <string name="card_ong_label">ONG: %1$s</string>
+    <string name="card_phone_label">Telefone: %1$s</string>
+    <string name="card_by_org">Por %1$s — ver perfil</string>
+    <string name="card_by_org_simple">Por %1$s</string>
+    <string name="value_not_informed">não informado</string>
+    <string name="card_attached">Arquivo anexado</string>
+    <string name="card_no_file">Nenhum arquivo anexado</string>
+    <string name="progress_count">%1$d de %2$d concluídos</string>
+    <string name="home_greeting">Olá, %1$s! Bem-vindo ao seu painel</string>
 </resources>

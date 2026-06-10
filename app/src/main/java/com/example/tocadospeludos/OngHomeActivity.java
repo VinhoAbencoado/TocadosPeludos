@@ -86,6 +86,8 @@ public class OngHomeActivity extends AppCompatActivity {
 
         findViewById(R.id.btnEditOng).setOnClickListener(v -> showEditProfileDialog());
         findViewById(R.id.btnChangePasswordOng).setOnClickListener(v -> showChangePasswordDialog());
+        findViewById(R.id.btnAdoptionHistory).setOnClickListener(v ->
+                startActivity(new Intent(this, AdoptionHistoryActivity.class)));
 
         findViewById(R.id.btnLogoutOng).setOnClickListener(v -> confirmLogout());
         findViewById(R.id.btnDeleteAccountOng).setOnClickListener(v -> confirmDeleteAccount());
@@ -99,54 +101,54 @@ public class OngHomeActivity extends AppCompatActivity {
         layout.setPadding(dp(20), dp(8), dp(20), 0);
 
         EditText nameField = new EditText(this);
-        nameField.setHint("Nome da ONG");
+        nameField.setHint(getString(R.string.hint_ong_name));
         nameField.setText(UserStorage.getCurrentUserName(this));
         layout.addView(nameField);
 
         EditText phoneField = new EditText(this);
-        phoneField.setHint("Telefone");
+        phoneField.setHint(getString(R.string.hint_phone));
         phoneField.setInputType(android.text.InputType.TYPE_CLASS_PHONE);
         String currentPhone = UserStorage.getCurrentUserPhone(this);
         if (currentPhone != null) phoneField.setText(currentPhone);
         layout.addView(phoneField);
 
         EditText cnpjField = new EditText(this);
-        cnpjField.setHint("CNPJ");
+        cnpjField.setHint(getString(R.string.hint_cnpj));
         cnpjField.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
         String currentCnpj = UserStorage.getCnpj(this, email);
         if (currentCnpj != null) cnpjField.setText(currentCnpj);
         layout.addView(cnpjField);
 
         AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle("Editar dados da ONG")
+                .setTitle(getString(R.string.dlg_edit_ong))
                 .setView(layout)
-                .setPositiveButton("Salvar", null)
-                .setNegativeButton("Cancelar", null)
+                .setPositiveButton(getString(R.string.dialog_save), null)
+                .setNegativeButton(getString(R.string.dialog_cancel), null)
                 .create();
         dialog.setOnShowListener(d -> dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
             String name = nameField.getText().toString().trim();
             String phone = phoneField.getText().toString().trim();
             String cnpj = cnpjField.getText().toString().trim();
             if (name.isEmpty()) {
-                nameField.setError("Informe o nome da ONG");
+                nameField.setError(getString(R.string.err_ong_name_required));
                 return;
             }
             if (!phone.isEmpty() && !PasswordUtils.isValidPhone(phone)) {
-                phoneField.setError("Telefone inválido (use DDD + número)");
+                phoneField.setError(getString(R.string.err_phone_invalid));
                 return;
             }
             if (cnpj.isEmpty() || !PasswordUtils.isValidCnpj(cnpj)) {
-                cnpjField.setError("CNPJ inválido (14 dígitos)");
+                cnpjField.setError(getString(R.string.err_cnpj_invalid));
                 return;
             }
             if (UserStorage.updateProfile(this, email, name, phone, cnpj)) {
-                Toast.makeText(this, "Dados atualizados", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.toast_data_updated), Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
                 TextView welcome = findViewById(R.id.tvOngWelcome);
                 if (welcome != null) welcome.setText(name);
                 setupAccountInfo();
             } else {
-                Toast.makeText(this, "Não foi possível atualizar", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.toast_update_failed), Toast.LENGTH_SHORT).show();
             }
         }));
         dialog.show();
@@ -157,39 +159,39 @@ public class OngHomeActivity extends AppCompatActivity {
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setPadding(dp(20), dp(8), dp(20), 0);
 
-        EditText currentField = passwordField("Senha atual");
-        EditText newField = passwordField("Nova senha");
-        EditText confirmField = passwordField("Confirmar nova senha");
+        EditText currentField = passwordField(getString(R.string.hint_current_password));
+        EditText newField = passwordField(getString(R.string.hint_new_password));
+        EditText confirmField = passwordField(getString(R.string.hint_confirm_new_password));
         layout.addView(currentField);
         layout.addView(newField);
         layout.addView(confirmField);
 
         AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle("Alterar senha")
+                .setTitle(getString(R.string.dlg_change_password))
                 .setView(layout)
-                .setPositiveButton("Salvar", null)
-                .setNegativeButton("Cancelar", null)
+                .setPositiveButton(getString(R.string.dialog_save), null)
+                .setNegativeButton(getString(R.string.dialog_cancel), null)
                 .create();
         dialog.setOnShowListener(d -> dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
             String current = currentField.getText().toString();
             String newPass = newField.getText().toString();
             String confirm = confirmField.getText().toString();
             if (!PasswordUtils.isStrongPassword(newPass)) {
-                newField.setError("Mínimo 8 caracteres, com letras e números");
+                newField.setError(getString(R.string.err_password_weak));
                 return;
             }
             if (!newPass.equals(confirm)) {
-                confirmField.setError("As senhas não coincidem");
+                confirmField.setError(getString(R.string.err_passwords_mismatch));
                 return;
             }
             int result = UserStorage.changePassword(this, email, current, newPass);
             if (result == UserStorage.PASSWORD_OK) {
-                Toast.makeText(this, "Senha alterada com sucesso", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.toast_password_changed), Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             } else if (result == UserStorage.PASSWORD_WRONG_CURRENT) {
-                currentField.setError("Senha atual incorreta");
+                currentField.setError(getString(R.string.err_current_password_wrong));
             } else {
-                Toast.makeText(this, "Não foi possível alterar a senha", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.toast_password_change_failed), Toast.LENGTH_SHORT).show();
             }
         }));
         dialog.show();
@@ -205,40 +207,55 @@ public class OngHomeActivity extends AppCompatActivity {
 
     private void confirmLogout() {
         new AlertDialog.Builder(this)
-                .setTitle("Sair")
-                .setMessage("Deseja realmente sair da sua conta?")
-                .setPositiveButton("Sair", (d, w) -> {
+                .setTitle(getString(R.string.dlg_logout))
+                .setMessage(getString(R.string.msg_logout_confirm))
+                .setPositiveButton(getString(R.string.dlg_logout), (d, w) -> {
                     UserStorage.logout(this);
                     startActivity(new Intent(this, MainActivity.class));
                     finish();
                 })
-                .setNegativeButton("Cancelar", null)
+                .setNegativeButton(getString(R.string.dialog_cancel), null)
                 .show();
     }
 
     private void confirmDeleteAccount() {
         new AlertDialog.Builder(this)
-                .setTitle("Excluir conta")
-                .setMessage("Esta ação é permanente e apagará os dados locais da ONG. Deseja continuar?")
-                .setPositiveButton("Excluir", (d, w) -> {
+                .setTitle(getString(R.string.dlg_delete_account))
+                .setMessage(getString(R.string.msg_delete_account_ong))
+                .setPositiveButton(getString(R.string.dialog_delete), (d, w) -> {
                     if (UserStorage.deleteAccount(this, email)) {
-                        Toast.makeText(this, "Conta excluída", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getString(R.string.toast_account_deleted), Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(this, MainActivity.class));
                         finish();
                     } else {
-                        Toast.makeText(this, "Falha ao excluir conta", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getString(R.string.toast_account_delete_failed), Toast.LENGTH_SHORT).show();
                     }
                 })
-                .setNegativeButton("Cancelar", null)
+                .setNegativeButton(getString(R.string.dialog_cancel), null)
                 .show();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        renderDashboard();
         renderEvents();
         renderAnimals();
         renderApplications();
+    }
+
+    private void renderDashboard() {
+        TextView events = findViewById(R.id.tvCountEvents);
+        TextView animals = findViewById(R.id.tvCountAnimals);
+        TextView pending = findViewById(R.id.tvCountPending);
+        if (events == null) {
+            return;
+        }
+        long now = DateUtils.startOfToday();
+        events.setText(String.valueOf(AppData.countUpcomingEventsForOwner(this, email, now)));
+        animals.setText(String.valueOf(AppData.countAvailableAnimals(this, email)));
+        pending.setText(String.valueOf(
+                AppData.countApplicationsForOwner(this, email, AppData.STATUS_PENDING)));
     }
 
     private void setupAccountInfo() {
@@ -253,7 +270,7 @@ public class OngHomeActivity extends AppCompatActivity {
         cnpj.setText("CNPJ: " + (orgCnpj != null && !orgCnpj.isEmpty() ? orgCnpj : "não informado"));
         emailView.setText(email);
         if (phoneView != null) {
-            phoneView.setText("Telefone: " + (orgPhone != null && !orgPhone.isEmpty() ? orgPhone : "não informado"));
+            phoneView.setText(getString(R.string.card_phone_label, orgPhone != null && !orgPhone.isEmpty() ? orgPhone : getString(R.string.value_not_informed)));
         }
     }
 
@@ -273,15 +290,56 @@ public class OngHomeActivity extends AppCompatActivity {
             card.addView(cardSubtitle(event.getDate() + "  •  " + event.getLocation()));
             card.addView(cardBody(event.getDescription()));
 
-            Button delete = actionButton("Excluir", R.drawable.bg_button_outline, R.color.danger);
-            delete.setOnClickListener(v -> {
-                AppData.deleteEvent(this, event.getId());
-                renderEvents();
+            LinearLayout row = new LinearLayout(this);
+            row.setOrientation(LinearLayout.HORIZONTAL);
+            row.setLayoutParams(rowParams());
+
+            Button edit = actionButton("Editar", R.drawable.bg_button_outline, R.color.dark_green);
+            edit.setOnClickListener(v -> {
+                Intent intent = new Intent(this, CreateEventActivity.class);
+                intent.putExtra(CreateEventActivity.EXTRA_EVENT_ID, event.getId());
+                startActivity(intent);
             });
+            LinearLayout.LayoutParams ep = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+            ep.setMargins(0, 0, dp(6), 0);
+            edit.setLayoutParams(ep);
+
+            Button checkIn = actionButton("Check-in", R.drawable.bg_button_outline, R.color.dark_green);
+            checkIn.setOnClickListener(v -> {
+                Intent intent = new Intent(this, CheckInActivity.class);
+                intent.putExtra(CheckInActivity.EXTRA_EVENT_ID, event.getId());
+                startActivity(intent);
+            });
+            LinearLayout.LayoutParams cp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+            cp.setMargins(dp(6), 0, 0, 0);
+            checkIn.setLayoutParams(cp);
+
+            row.addView(edit);
+            row.addView(checkIn);
+            card.addView(row);
+
+            Button delete = actionButton(getString(R.string.dialog_delete), R.drawable.bg_button_outline, R.color.danger);
+            LinearLayout.LayoutParams dlp = rowParams();
+            dlp.setMargins(0, dp(8), 0, 0);
+            delete.setLayoutParams(dlp);
+            delete.setOnClickListener(v -> confirmDeleteEvent(event));
             card.addView(delete);
 
             container.addView(card);
         }
+    }
+
+    private void confirmDeleteEvent(Event event) {
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.dlg_delete_event))
+                .setMessage(getString(R.string.msg_delete_event, event.getTitle()))
+                .setPositiveButton(getString(R.string.dialog_delete), (d, w) -> {
+                    AppData.deleteEvent(this, event.getId());
+                    Toast.makeText(this, getString(R.string.toast_event_deleted), Toast.LENGTH_SHORT).show();
+                    renderEvents();
+                })
+                .setNegativeButton(getString(R.string.dialog_cancel), null)
+                .show();
     }
 
     // ===================== ANIMAIS =====================
@@ -353,7 +411,7 @@ public class OngHomeActivity extends AppCompatActivity {
             row.addView(toggle);
             card.addView(row);
 
-            Button delete = actionButton("Excluir", R.drawable.bg_button_outline, R.color.danger);
+            Button delete = actionButton(getString(R.string.dialog_delete), R.drawable.bg_button_outline, R.color.danger);
             LinearLayout.LayoutParams dp2 = rowParams();
             dp2.setMargins(0, dp(8), 0, 0);
             delete.setLayoutParams(dp2);
@@ -366,14 +424,14 @@ public class OngHomeActivity extends AppCompatActivity {
 
     private void confirmDeleteAnimal(Animal animal) {
         new AlertDialog.Builder(this)
-                .setTitle("Excluir animal")
-                .setMessage("Deseja excluir \"" + animal.getName() + "\"? Esta ação não pode ser desfeita.")
-                .setPositiveButton("Excluir", (d, w) -> {
+                .setTitle(getString(R.string.dlg_delete_animal))
+                .setMessage(getString(R.string.msg_delete_animal, animal.getName()))
+                .setPositiveButton(getString(R.string.dialog_delete), (d, w) -> {
                     AppData.deleteAnimal(this, animal.getId());
-                    Toast.makeText(this, "Animal excluído", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.toast_animal_deleted), Toast.LENGTH_SHORT).show();
                     renderAnimals();
                 })
-                .setNegativeButton("Cancelar", null)
+                .setNegativeButton(getString(R.string.dialog_cancel), null)
                 .show();
     }
 
@@ -383,43 +441,43 @@ public class OngHomeActivity extends AppCompatActivity {
         layout.setPadding(dp(20), dp(8), dp(20), 0);
 
         EditText nameField = new EditText(this);
-        nameField.setHint("Nome");
+        nameField.setHint(getString(R.string.hint_name));
         nameField.setText(animal.getName());
         layout.addView(nameField);
 
         EditText speciesField = new EditText(this);
-        speciesField.setHint("Espécie / tipo");
+        speciesField.setHint(getString(R.string.hint_species));
         speciesField.setText(animal.getSpecies());
         layout.addView(speciesField);
 
         EditText descField = new EditText(this);
-        descField.setHint("Descrição");
+        descField.setHint(getString(R.string.hint_description));
         descField.setText(animal.getDescription());
         descField.setMinLines(3);
         descField.setGravity(Gravity.TOP | Gravity.START);
         layout.addView(descField);
 
         AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle("Editar animal")
+                .setTitle(getString(R.string.dlg_edit_animal))
                 .setView(layout)
-                .setPositiveButton("Salvar", null)
-                .setNegativeButton("Cancelar", null)
+                .setPositiveButton(getString(R.string.dialog_save), null)
+                .setNegativeButton(getString(R.string.dialog_cancel), null)
                 .create();
         dialog.setOnShowListener(d -> dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
             String name = nameField.getText().toString().trim();
             String species = speciesField.getText().toString().trim();
             String desc = descField.getText().toString().trim();
             if (name.isEmpty() || species.isEmpty() || desc.isEmpty()) {
-                Toast.makeText(this, "Preencha nome, espécie e descrição", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.toast_fill_animal_fields), Toast.LENGTH_SHORT).show();
                 return;
             }
             // photoUri null preserva a foto atual.
             if (AppData.updateAnimal(this, animal.getId(), name, species, desc, null)) {
-                Toast.makeText(this, "Animal atualizado", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.toast_animal_updated), Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
                 renderAnimals();
             } else {
-                Toast.makeText(this, "Não foi possível atualizar", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.toast_update_failed), Toast.LENGTH_SHORT).show();
             }
         }));
         dialog.show();
@@ -476,7 +534,7 @@ public class OngHomeActivity extends AppCompatActivity {
                 Button approve = actionButton("Aprovar", R.drawable.bg_button_primary, R.color.white);
                 approve.setOnClickListener(v -> {
                     AppData.setApplicationStatus(this, appId, AppData.STATUS_APPROVED);
-                    Toast.makeText(this, "Candidatura aprovada", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.toast_application_approved), Toast.LENGTH_SHORT).show();
                     renderApplications();
                     renderAnimals();
                 });
@@ -484,16 +542,16 @@ public class OngHomeActivity extends AppCompatActivity {
                 ap.setMargins(0, 0, dp(6), 0);
                 approve.setLayoutParams(ap);
 
-                Button reject = actionButton("Recusar", R.drawable.bg_button_outline, R.color.danger);
+                Button reject = actionButton(getString(R.string.btn_reject), R.drawable.bg_button_outline, R.color.danger);
                 reject.setOnClickListener(v -> new AlertDialog.Builder(this)
-                        .setTitle("Recusar candidatura")
-                        .setMessage("Deseja recusar a candidatura de " + app.optString("adopterName", "este adotante") + "?")
-                        .setPositiveButton("Recusar", (d, w) -> {
+                        .setTitle(getString(R.string.dlg_reject_application))
+                        .setMessage(getString(R.string.msg_reject_application, app.optString("adopterName", "este adotante")))
+                        .setPositiveButton(getString(R.string.btn_reject), (d, w) -> {
                             AppData.setApplicationStatus(this, appId, AppData.STATUS_REJECTED);
-                            Toast.makeText(this, "Candidatura recusada", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, getString(R.string.toast_application_rejected), Toast.LENGTH_SHORT).show();
                             renderApplications();
                         })
-                        .setNegativeButton("Cancelar", null)
+                        .setNegativeButton(getString(R.string.dialog_cancel), null)
                         .show());
                 LinearLayout.LayoutParams rp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
                 rp.setMargins(dp(6), 0, 0, 0);
@@ -519,7 +577,7 @@ public class OngHomeActivity extends AppCompatActivity {
             appendField(sb, docs, "Nascimento", "birthDate");
             appendField(sb, docs, "CPF", "cpf");
             appendField(sb, docs, "RG", "rg");
-            appendField(sb, docs, "Telefone", "phone");
+            appendField(sb, docs, getString(R.string.hint_phone), "phone");
             appendField(sb, docs, "Endereço", "address");
 
             sb.append("\nAnexos:\n");
@@ -532,7 +590,7 @@ public class OngHomeActivity extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setTitle(adopterName)
                 .setMessage(sb.toString().trim())
-                .setPositiveButton("Fechar", null)
+                .setPositiveButton(getString(R.string.dialog_close), null)
                 .show();
     }
 

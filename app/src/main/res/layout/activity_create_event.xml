@@ -19,13 +19,14 @@
             style="@style/OutlineButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Voltar"
+            android:text="@string/action_back"
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvCreateEventTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Novo evento"
+            android:text="@string/create_event_title"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@color/dark_green"
@@ -34,7 +35,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Título *"
+            android:text="@string/label_title_required"
             android:textStyle="bold"
             android:textColor="@color/text_primary"
             android:layout_marginBottom="8dp" />
@@ -43,14 +44,14 @@
             style="@style/FieldInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ex.: Feira de Adoção"
+            android:hint="@string/hint_event_title"
             android:inputType="textCapSentences"
             android:layout_marginBottom="16dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Data *"
+            android:text="@string/label_date_required"
             android:textStyle="bold"
             android:textColor="@color/text_primary"
             android:layout_marginBottom="8dp" />
@@ -59,14 +60,16 @@
             style="@style/FieldInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ex.: 20 mai"
-            android:inputType="text"
+            android:hint="@string/hint_event_date"
+            android:focusable="false"
+            android:clickable="true"
+            android:inputType="none"
             android:layout_marginBottom="16dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Local *"
+            android:text="@string/label_location_required"
             android:textStyle="bold"
             android:textColor="@color/text_primary"
             android:layout_marginBottom="8dp" />
@@ -75,14 +78,14 @@
             style="@style/FieldInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ex.: Praça Central"
+            android:hint="@string/hint_event_location"
             android:inputType="text"
             android:layout_marginBottom="16dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Descrição *"
+            android:text="@string/label_description_required"
             android:textStyle="bold"
             android:textColor="@color/text_primary"
             android:layout_marginBottom="8dp" />
@@ -91,7 +94,7 @@
             style="@style/FieldInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Detalhes do evento"
+            android:hint="@string/hint_event_description"
             android:inputType="textMultiLine|textCapSentences"
             android:minLines="3"
             android:gravity="top|start"
@@ -102,7 +105,7 @@
             style="@style/PrimaryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Publicar evento" />
+            android:text="@string/publish_event" />
 
     </LinearLayout>
 </ScrollView>

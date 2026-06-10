@@ -24,7 +24,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Painel da ONG"
+            android:text="@string/ong_panel"
             android:textColor="#CCFFFFFF"
             android:textSize="13sp" />
 
@@ -62,10 +62,107 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="16dp"
+                    android:baselineAligned="false">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@drawable/bg_card"
+                        android:padding="14dp"
+                        android:elevation="2dp"
+                        android:layout_marginEnd="6dp">
+
+                        <TextView
+                            android:id="@+id/tvCountEvents"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/green_primary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ong_count_events"
+                            android:textSize="12sp"
+                            android:gravity="center"
+                            android:textColor="@color/text_secondary" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@drawable/bg_card"
+                        android:padding="14dp"
+                        android:elevation="2dp"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginEnd="3dp">
+
+                        <TextView
+                            android:id="@+id/tvCountAnimals"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/green_primary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ong_count_animals"
+                            android:textSize="12sp"
+                            android:gravity="center"
+                            android:textColor="@color/text_secondary" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@drawable/bg_card"
+                        android:padding="14dp"
+                        android:elevation="2dp"
+                        android:layout_marginStart="6dp">
+
+                        <TextView
+                            android:id="@+id/tvCountPending"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/amber" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ong_count_pending"
+                            android:textSize="12sp"
+                            android:gravity="center"
+                            android:textColor="@color/text_secondary" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Meus eventos"
+                    android:text="@string/ong_my_events"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     android:textColor="@color/text_primary"
@@ -76,14 +173,14 @@
                     style="@style/PrimaryButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="+ Novo evento"
+                    android:text="@string/ong_new_event"
                     android:layout_marginBottom="16dp" />
 
                 <TextView
                     android:id="@+id/tvNoEvents"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Você ainda não criou eventos. Crie um para que apareça no app dos adotantes."
+                    android:text="@string/ong_no_events"
                     android:textSize="14sp"
                     android:textColor="@color/text_secondary" />
 
@@ -105,7 +202,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Animais para adoção"
+                    android:text="@string/ong_animals_for_adoption"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     android:textColor="@color/text_primary"
@@ -116,14 +213,14 @@
                     style="@style/PrimaryButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="+ Cadastrar animal"
+                    android:text="@string/ong_new_animal"
                     android:layout_marginBottom="16dp" />
 
                 <TextView
                     android:id="@+id/tvNoAnimals"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Nenhum animal cadastrado ainda."
+                    android:text="@string/ong_no_animals"
                     android:textSize="14sp"
                     android:textColor="@color/text_secondary" />
 
@@ -145,7 +242,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Candidaturas de adoção"
+                    android:text="@string/ong_applications"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     android:textColor="@color/text_primary"
@@ -155,7 +252,7 @@
                     android:id="@+id/tvNoApplications"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Nenhuma candidatura recebida. Elas aparecem aqui quando um adotante se candidata a um dos seus animais."
+                    android:text="@string/ong_no_applications"
                     android:textSize="14sp"
                     android:textColor="@color/text_secondary" />
 
@@ -177,7 +274,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Conta da ONG"
+                    android:text="@string/ong_account"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     android:textColor="@color/text_primary"
@@ -234,14 +331,22 @@
                         style="@style/PrimaryButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Editar dados da ONG" />
+                        android:text="@string/ong_edit_data" />
 
                     <Button
                         android:id="@+id/btnChangePasswordOng"
                         style="@style/OutlineButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Alterar senha"
+                        android:text="@string/action_change_password"
+                        android:layout_marginTop="10dp" />
+
+                    <Button
+                        android:id="@+id/btnAdoptionHistory"
+                        style="@style/OutlineButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ong_adoption_history"
                         android:layout_marginTop="10dp" />
 
                 </LinearLayout>
@@ -251,14 +356,14 @@
                     style="@style/PrimaryButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Sair" />
+                    android:text="@string/action_logout" />
 
                 <Button
                     android:id="@+id/btnDeleteAccountOng"
                     style="@style/DangerButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Deletar conta"
+                    android:text="@string/action_delete_account"
                     android:layout_marginTop="12dp"
                     android:layout_marginBottom="8dp" />
             </LinearLayout>
